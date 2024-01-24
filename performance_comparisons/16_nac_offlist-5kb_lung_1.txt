@@ -1,0 +1,39 @@
+[2024-01-14 09:01:50,785]    INFO [count_nac] Using index STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/index.idx to generate BUS file to ./performance_comparisons/tmp/ from
+[2024-01-14 09:01:50,786]    INFO [count_nac]         5k_mouse_lung_CNIK_3pv3_fastqs/5k_mouse_lung_CNIK_3pv3_S4_L001_R1_001.fastq.gz
+[2024-01-14 09:01:50,786]    INFO [count_nac]         5k_mouse_lung_CNIK_3pv3_fastqs/5k_mouse_lung_CNIK_3pv3_S4_L001_R2_001.fastq.gz
+[2024-01-14 09:01:50,786]    INFO [count_nac]         5k_mouse_lung_CNIK_3pv3_fastqs/5k_mouse_lung_CNIK_3pv3_S4_L002_R1_001.fastq.gz
+[2024-01-14 09:01:50,786]    INFO [count_nac]         5k_mouse_lung_CNIK_3pv3_fastqs/5k_mouse_lung_CNIK_3pv3_S4_L002_R2_001.fastq.gz
+[2024-01-14 09:01:50,786]    INFO [count_nac]         5k_mouse_lung_CNIK_3pv3_fastqs/5k_mouse_lung_CNIK_3pv3_S4_L003_R1_001.fastq.gz
+[2024-01-14 09:01:50,786]    INFO [count_nac]         5k_mouse_lung_CNIK_3pv3_fastqs/5k_mouse_lung_CNIK_3pv3_S4_L003_R2_001.fastq.gz
+[2024-01-14 09:13:27,189]    INFO [count_nac] Sorting BUS file ./performance_comparisons/tmp/output.bus to ./performance_comparisons/tmp/tmp/output.s.bus
+[2024-01-14 09:14:02,488]    INFO [count_nac] On-list not provided
+[2024-01-14 09:14:02,489]    INFO [count_nac] Copying pre-packaged 10XV3 on-list to ./performance_comparisons/tmp/
+[2024-01-14 09:14:03,264]    INFO [count_nac] Inspecting BUS file ./performance_comparisons/tmp/tmp/output.s.bus
+[2024-01-14 09:14:24,923]    INFO [count_nac] Correcting BUS records in ./performance_comparisons/tmp/tmp/output.s.bus to ./performance_comparisons/tmp/tmp/output.s.c.bus with on-list ./performance_comparisons/tmp/10x_version3_whitelist.txt
+[2024-01-14 09:14:54,600]    INFO [count_nac] Sorting BUS file ./performance_comparisons/tmp/tmp/output.s.c.bus to ./performance_comparisons/tmp/output.unfiltered.bus
+[2024-01-14 09:15:12,867]    INFO [count_nac] Generating count matrix ./performance_comparisons/tmp/counts_unfiltered/cells_x_genes from BUS file ./performance_comparisons/tmp/output.unfiltered.bus
+[2024-01-14 09:19:06,264]    INFO [count_nac] Writing gene names to file ./performance_comparisons/tmp/counts_unfiltered/cells_x_genes.genes.names.txt
+[2024-01-14 09:19:06,629] WARNING [count_nac] 323 gene IDs do not have corresponding valid gene names. These genes will use their gene IDs instead.
+	Command being timed: "kb count --kallisto STARsoloManuscript/exe/kallisto_0.50.1 --bustools STARsoloManuscript/exe/bustools_0.43.2 -t 16 -x 10XV3 --workflow nac -i STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/index.idx -g STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/g -c1 STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/c1 -c2 STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/c2 -o ./performance_comparisons/tmp/ --overwrite 5k_mouse_lung_CNIK_3pv3_fastqs/5k_mouse_lung_CNIK_3pv3_S4_L001_R1_001.fastq.gz 5k_mouse_lung_CNIK_3pv3_fastqs/5k_mouse_lung_CNIK_3pv3_S4_L001_R2_001.fastq.gz 5k_mouse_lung_CNIK_3pv3_fastqs/5k_mouse_lung_CNIK_3pv3_S4_L002_R1_001.fastq.gz 5k_mouse_lung_CNIK_3pv3_fastqs/5k_mouse_lung_CNIK_3pv3_S4_L002_R2_001.fastq.gz 5k_mouse_lung_CNIK_3pv3_fastqs/5k_mouse_lung_CNIK_3pv3_S4_L003_R1_001.fastq.gz 5k_mouse_lung_CNIK_3pv3_fastqs/5k_mouse_lung_CNIK_3pv3_S4_L003_R2_001.fastq.gz"
+	User time (seconds): 10375.82
+	System time (seconds): 83.28
+	Percent of CPU this job got: 1001%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 17:24.12
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 9391292
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 3
+	Minor (reclaiming a frame) page faults: 22849245
+	Voluntary context switches: 431421
+	Involuntary context switches: 15269
+	Swaps: 0
+	File system inputs: 41935176
+	File system outputs: 31753576
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

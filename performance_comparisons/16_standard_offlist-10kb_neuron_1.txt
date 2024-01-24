@@ -1,0 +1,39 @@
+[2024-01-14 14:14:38,825]    INFO [count] Using index STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/standard_offlist_1/index.idx to generate BUS file to ./performance_comparisons/tmp/ from
+[2024-01-14 14:14:38,825]    INFO [count]         SC3_v3_NextGem_SI_Neuron_10K_fastqs/SC3_v3_NextGem_SI_Neuron_10K_S1_L002_R1_001.fastq.gz
+[2024-01-14 14:14:38,825]    INFO [count]         SC3_v3_NextGem_SI_Neuron_10K_fastqs/SC3_v3_NextGem_SI_Neuron_10K_S1_L002_R2_001.fastq.gz
+[2024-01-14 14:14:38,825]    INFO [count]         SC3_v3_NextGem_SI_Neuron_10K_fastqs/SC3_v3_NextGem_SI_Neuron_10K_S1_L003_R1_001.fastq.gz
+[2024-01-14 14:14:38,825]    INFO [count]         SC3_v3_NextGem_SI_Neuron_10K_fastqs/SC3_v3_NextGem_SI_Neuron_10K_S1_L003_R2_001.fastq.gz
+[2024-01-14 14:14:38,825]    INFO [count]         SC3_v3_NextGem_SI_Neuron_10K_fastqs/SC3_v3_NextGem_SI_Neuron_10K_S1_L004_R1_001.fastq.gz
+[2024-01-14 14:14:38,825]    INFO [count]         SC3_v3_NextGem_SI_Neuron_10K_fastqs/SC3_v3_NextGem_SI_Neuron_10K_S1_L004_R2_001.fastq.gz
+[2024-01-14 14:49:53,885]    INFO [count] Sorting BUS file ./performance_comparisons/tmp/output.bus to ./performance_comparisons/tmp/tmp/output.s.bus
+[2024-01-14 14:53:35,936]    INFO [count] On-list not provided
+[2024-01-14 14:53:35,947]    INFO [count] Copying pre-packaged 10XV3 on-list to ./performance_comparisons/tmp/
+[2024-01-14 14:53:37,196]    INFO [count] Inspecting BUS file ./performance_comparisons/tmp/tmp/output.s.bus
+[2024-01-14 14:54:08,273]    INFO [count] Correcting BUS records in ./performance_comparisons/tmp/tmp/output.s.bus to ./performance_comparisons/tmp/tmp/output.s.c.bus with on-list ./performance_comparisons/tmp/10x_version3_whitelist.txt
+[2024-01-14 14:55:21,433]    INFO [count] Sorting BUS file ./performance_comparisons/tmp/tmp/output.s.c.bus to ./performance_comparisons/tmp/output.unfiltered.bus
+[2024-01-14 14:56:40,108]    INFO [count] Generating count matrix ./performance_comparisons/tmp/counts_unfiltered/cells_x_genes from BUS file ./performance_comparisons/tmp/output.unfiltered.bus
+[2024-01-14 14:58:29,981]    INFO [count] Writing gene names to file ./performance_comparisons/tmp/counts_unfiltered/cells_x_genes.genes.names.txt
+[2024-01-14 14:58:30,245] WARNING [count] 323 gene IDs do not have corresponding valid gene names. These genes will use their gene IDs instead.
+	Command being timed: "kb count --kallisto STARsoloManuscript/exe/kallisto_0.50.1 --bustools STARsoloManuscript/exe/bustools_0.43.2 -t 16 -x 10XV3 --workflow standard -i STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/standard_offlist_1/index.idx -g STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/standard_offlist_1/g -o ./performance_comparisons/tmp/ --overwrite SC3_v3_NextGem_SI_Neuron_10K_fastqs/SC3_v3_NextGem_SI_Neuron_10K_S1_L002_R1_001.fastq.gz SC3_v3_NextGem_SI_Neuron_10K_fastqs/SC3_v3_NextGem_SI_Neuron_10K_S1_L002_R2_001.fastq.gz SC3_v3_NextGem_SI_Neuron_10K_fastqs/SC3_v3_NextGem_SI_Neuron_10K_S1_L003_R1_001.fastq.gz SC3_v3_NextGem_SI_Neuron_10K_fastqs/SC3_v3_NextGem_SI_Neuron_10K_S1_L003_R2_001.fastq.gz SC3_v3_NextGem_SI_Neuron_10K_fastqs/SC3_v3_NextGem_SI_Neuron_10K_S1_L004_R1_001.fastq.gz SC3_v3_NextGem_SI_Neuron_10K_fastqs/SC3_v3_NextGem_SI_Neuron_10K_S1_L004_R2_001.fastq.gz"
+	User time (seconds): 33448.79
+	System time (seconds): 144.52
+	Percent of CPU this job got: 1272%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 44:00.65
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2134316
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 24
+	Minor (reclaiming a frame) page faults: 6359241
+	Voluntary context switches: 425667
+	Involuntary context switches: 92575
+	Swaps: 0
+	File system inputs: 12754616
+	File system outputs: 171829248
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

@@ -1,0 +1,21 @@
+[dsullivan@tolva STARsoloManuscript]$ make -C samples
+make: Entering directory '/home/dsullivan/HSHMP_2022/STARsoloManuscript/samples'
+mkdir -p 10X/3/pbmc_5k/ && cd 10X/3/pbmc_5k/ && \
+curl -o fastqs.tar http://s3-us-west-2.amazonaws.com/10x.files/samples/cell-exp/3.0.2/5k_pbmc_v3/5k_pbmc_v3_fastqs.tar && \                                                                                                  
+tar xvf fastqs.tar -C ./ --strip-components=1
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 27.2G  100 27.2G    0     0  30.0M      0  0:15:29  0:15:29 --:--:-- 22.2M
+5k_pbmc_v3_fastqs/5k_pbmc_v3_S1_L001_I1_001.fastq.gz
+5k_pbmc_v3_fastqs/5k_pbmc_v3_S1_L001_R1_001.fastq.gz
+5k_pbmc_v3_fastqs/5k_pbmc_v3_S1_L001_R2_001.fastq.gz
+5k_pbmc_v3_fastqs/5k_pbmc_v3_S1_L002_I1_001.fastq.gz
+5k_pbmc_v3_fastqs/5k_pbmc_v3_S1_L002_R1_001.fastq.gz
+5k_pbmc_v3_fastqs/5k_pbmc_v3_S1_L002_R2_001.fastq.gz
+5k_pbmc_v3_fastqs/5k_pbmc_v3_S1_L003_I1_001.fastq.gz
+5k_pbmc_v3_fastqs/5k_pbmc_v3_S1_L003_R1_001.fastq.gz
+5k_pbmc_v3_fastqs/5k_pbmc_v3_S1_L003_R2_001.fastq.gz
+5k_pbmc_v3_fastqs/5k_pbmc_v3_S1_L004_I1_001.fastq.gz
+5k_pbmc_v3_fastqs/5k_pbmc_v3_S1_L004_R1_001.fastq.gz
+5k_pbmc_v3_fastqs/5k_pbmc_v3_S1_L004_R2_001.fastq.gz
+make: Leaving directory '/home/dsullivan/HSHMP_2022/STARsoloManuscript/samples'

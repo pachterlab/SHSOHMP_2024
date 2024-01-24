@@ -1,0 +1,39 @@
+[2024-01-14 10:03:55,676]    INFO [count_nac] Using index STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/index.idx to generate BUS file to ./performance_comparisons/tmp/ from
+[2024-01-14 10:03:55,676]    INFO [count_nac]         SC3_v3_NextGem_SI_Neuron_10K_fastqs/SC3_v3_NextGem_SI_Neuron_10K_S1_L002_R1_001.fastq.gz
+[2024-01-14 10:03:55,676]    INFO [count_nac]         SC3_v3_NextGem_SI_Neuron_10K_fastqs/SC3_v3_NextGem_SI_Neuron_10K_S1_L002_R2_001.fastq.gz
+[2024-01-14 10:03:55,676]    INFO [count_nac]         SC3_v3_NextGem_SI_Neuron_10K_fastqs/SC3_v3_NextGem_SI_Neuron_10K_S1_L003_R1_001.fastq.gz
+[2024-01-14 10:03:55,676]    INFO [count_nac]         SC3_v3_NextGem_SI_Neuron_10K_fastqs/SC3_v3_NextGem_SI_Neuron_10K_S1_L003_R2_001.fastq.gz
+[2024-01-14 10:03:55,676]    INFO [count_nac]         SC3_v3_NextGem_SI_Neuron_10K_fastqs/SC3_v3_NextGem_SI_Neuron_10K_S1_L004_R1_001.fastq.gz
+[2024-01-14 10:03:55,676]    INFO [count_nac]         SC3_v3_NextGem_SI_Neuron_10K_fastqs/SC3_v3_NextGem_SI_Neuron_10K_S1_L004_R2_001.fastq.gz
+[2024-01-14 11:04:30,951]    INFO [count_nac] Sorting BUS file ./performance_comparisons/tmp/output.bus to ./performance_comparisons/tmp/tmp/output.s.bus
+[2024-01-14 11:10:51,707]    INFO [count_nac] On-list not provided
+[2024-01-14 11:10:51,708]    INFO [count_nac] Copying pre-packaged 10XV3 on-list to ./performance_comparisons/tmp/
+[2024-01-14 11:10:52,402]    INFO [count_nac] Inspecting BUS file ./performance_comparisons/tmp/tmp/output.s.bus
+[2024-01-14 11:11:33,911]    INFO [count_nac] Correcting BUS records in ./performance_comparisons/tmp/tmp/output.s.bus to ./performance_comparisons/tmp/tmp/output.s.c.bus with on-list ./performance_comparisons/tmp/10x_version3_whitelist.txt
+[2024-01-14 11:13:07,605]    INFO [count_nac] Sorting BUS file ./performance_comparisons/tmp/tmp/output.s.c.bus to ./performance_comparisons/tmp/output.unfiltered.bus
+[2024-01-14 11:15:05,839]    INFO [count_nac] Generating count matrix ./performance_comparisons/tmp/counts_unfiltered/cells_x_genes from BUS file ./performance_comparisons/tmp/output.unfiltered.bus
+[2024-01-14 11:22:42,055]    INFO [count_nac] Writing gene names to file ./performance_comparisons/tmp/counts_unfiltered/cells_x_genes.genes.names.txt
+[2024-01-14 11:22:42,395] WARNING [count_nac] 323 gene IDs do not have corresponding valid gene names. These genes will use their gene IDs instead.
+	Command being timed: "kb count --kallisto STARsoloManuscript/exe/kallisto_0.50.1 --bustools STARsoloManuscript/exe/bustools_0.43.2 -t 16 -x 10XV3 --workflow nac -i STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/index.idx -g STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/g -c1 STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/c1 -c2 STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/c2 -o ./performance_comparisons/tmp/ --overwrite SC3_v3_NextGem_SI_Neuron_10K_fastqs/SC3_v3_NextGem_SI_Neuron_10K_S1_L002_R1_001.fastq.gz SC3_v3_NextGem_SI_Neuron_10K_fastqs/SC3_v3_NextGem_SI_Neuron_10K_S1_L002_R2_001.fastq.gz SC3_v3_NextGem_SI_Neuron_10K_fastqs/SC3_v3_NextGem_SI_Neuron_10K_S1_L003_R1_001.fastq.gz SC3_v3_NextGem_SI_Neuron_10K_fastqs/SC3_v3_NextGem_SI_Neuron_10K_S1_L003_R2_001.fastq.gz SC3_v3_NextGem_SI_Neuron_10K_fastqs/SC3_v3_NextGem_SI_Neuron_10K_S1_L004_R1_001.fastq.gz SC3_v3_NextGem_SI_Neuron_10K_fastqs/SC3_v3_NextGem_SI_Neuron_10K_S1_L004_R2_001.fastq.gz"
+	User time (seconds): 57666.21
+	System time (seconds): 290.23
+	Percent of CPU this job got: 1223%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:18:56
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 9515240
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 12
+	Minor (reclaiming a frame) page faults: 57704277
+	Voluntary context switches: 643209
+	Involuntary context switches: 95539
+	Swaps: 0
+	File system inputs: 233778128
+	File system outputs: 228798224
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

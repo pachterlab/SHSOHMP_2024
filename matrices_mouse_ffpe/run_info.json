@@ -1,0 +1,13 @@
+{
+	"n_targets": 158430,
+	"n_bootstraps": 0,
+	"n_processed": 832193962,
+	"n_pseudoaligned": 736640189,
+	"n_unique": 18671189,
+	"p_pseudoaligned": 88.5,
+	"p_unique": 2.2,
+	"kallisto_version": "0.50.1",
+	"index_version": 13,
+	"start_time": "Wed Jan 17 12:48:29 2024",
+	"call": "/home/dsullivan/HSSHMP_2024/STARsoloManuscript/exe/kallisto_0.50.1 bus -i STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/index.idx -o ./matrices_mouse_ffpe/ -x VISIUM -t 20 --unstranded CytAssist_11mm_FFPE_Mouse_Embryo_fastqs/CytAssist_11mm_FFPE_Mouse_Embryo_S1_L004_R1_001.fastq.gz CytAssist_11mm_FFPE_Mouse_Embryo_fastqs/CytAssist_11mm_FFPE_Mouse_Embryo_S1_L004_R2_001.fastq.gz"
+}

@@ -1,0 +1,35 @@
+[2024-01-01 08:08:54,760]    INFO [count_nac] Using index genomes/index/kallisto_0.50.0/human_CR_3.0.0/nac_offlist_1/index.idx to generate BUS file to ./results_kallisto_version_performances/temp/ from
+[2024-01-01 08:08:54,761]    INFO [count_nac]         samples/10X/3/pbmc_5k/5k_pbmc_v3_S1_L001_R1_001.fastq.gz
+[2024-01-01 08:08:54,761]    INFO [count_nac]         samples/10X/3/pbmc_5k/5k_pbmc_v3_S1_L001_R2_001.fastq.gz
+[2024-01-01 08:22:06,904]    INFO [count_nac] Sorting BUS file ./results_kallisto_version_performances/temp/output.bus to ./results_kallisto_version_performances/temp/tmp/output.s.bus
+[2024-01-01 08:22:22,647]    INFO [count_nac] On-list not provided
+[2024-01-01 08:22:22,647]    INFO [count_nac] Copying pre-packaged 10XV3 on-list to ./results_kallisto_version_performances/temp/
+[2024-01-01 08:22:23,355]    INFO [count_nac] Inspecting BUS file ./results_kallisto_version_performances/temp/tmp/output.s.bus
+[2024-01-01 08:22:36,792]    INFO [count_nac] Correcting BUS records in ./results_kallisto_version_performances/temp/tmp/output.s.bus to ./results_kallisto_version_performances/temp/tmp/output.s.c.bus with on-list ./results_kallisto_version_performances/temp/10x_version3_whitelist.txt
+[2024-01-01 08:22:57,346]    INFO [count_nac] Sorting BUS file ./results_kallisto_version_performances/temp/tmp/output.s.c.bus to ./results_kallisto_version_performances/temp/output.unfiltered.bus
+[2024-01-01 08:23:09,984]    INFO [count_nac] Generating count matrix ./results_kallisto_version_performances/temp/counts_unfiltered/cells_x_genes from BUS file ./results_kallisto_version_performances/temp/output.unfiltered.bus
+[2024-01-01 08:24:47,127]    INFO [count_nac] Writing gene names to file ./results_kallisto_version_performances/temp/counts_unfiltered/cells_x_genes.genes.names.txt
+[2024-01-01 08:24:47,473] WARNING [count_nac] 48 gene IDs do not have corresponding valid gene names. These genes will use their gene IDs instead.
+	Command being timed: "kb count --kallisto exe/kallisto_0.50.0 --bustools exe/bustools_0.43.2 -t 8 -x 10XV3 --workflow nac -i genomes/index/kallisto_0.50.0/human_CR_3.0.0/nac_offlist_1/index.idx -g genomes/index/kallisto_0.50.0/human_CR_3.0.0/nac_offlist_1//g -c1 genomes/index/kallisto_0.50.0/human_CR_3.0.0/nac_offlist_1//c1 -c2 genomes/index/kallisto_0.50.0/human_CR_3.0.0/nac_offlist_1//c2 -o ./results_kallisto_version_performances/temp/ samples/10X/3/pbmc_5k/5k_pbmc_v3_S1_L001_R1_001.fastq.gz samples/10X/3/pbmc_5k/5k_pbmc_v3_S1_L001_R2_001.fastq.gz"
+	User time (seconds): 5221.88
+	System time (seconds): 140.60
+	Percent of CPU this job got: 559%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 15:58.50
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 19611992
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 1
+	Minor (reclaiming a frame) page faults: 51131817
+	Voluntary context switches: 938996
+	Involuntary context switches: 23849
+	Swaps: 0
+	File system inputs: 15605792
+	File system outputs: 14848696
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

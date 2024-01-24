@@ -1,0 +1,13 @@
+{
+	"n_targets": 158430,
+	"n_bootstraps": 0,
+	"n_processed": 1589915447,
+	"n_pseudoaligned": 1322156387,
+	"n_unique": 343172549,
+	"p_pseudoaligned": 83.2,
+	"p_unique": 21.6,
+	"kallisto_version": "0.50.1",
+	"index_version": 13,
+	"start_time": "Fri Jan  5 07:46:57 2024",
+	"call": "/home/dsullivan/HSSHMP_2024/STARsoloManuscript/exe/kallisto_0.50.1 bus -i STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/index.idx -o ./matrices_mouse_10k_neuron/ -x 10XV3 -t 20 SC3_v3_NextGem_SI_Neuron_10K_fastqs/SC3_v3_NextGem_SI_Neuron_10K_S1_L002_R1_001.fastq.gz SC3_v3_NextGem_SI_Neuron_10K_fastqs/SC3_v3_NextGem_SI_Neuron_10K_S1_L002_R2_001.fastq.gz SC3_v3_NextGem_SI_Neuron_10K_fastqs/SC3_v3_NextGem_SI_Neuron_10K_S1_L003_R1_001.fastq.gz SC3_v3_NextGem_SI_Neuron_10K_fastqs/SC3_v3_NextGem_SI_Neuron_10K_S1_L003_R2_001.fastq.gz SC3_v3_NextGem_SI_Neuron_10K_fastqs/SC3_v3_NextGem_SI_Neuron_10K_S1_L004_R1_001.fastq.gz SC3_v3_NextGem_SI_Neuron_10K_fastqs/SC3_v3_NextGem_SI_Neuron_10K_S1_L004_R2_001.fastq.gz"
+}

@@ -1,0 +1,13 @@
+SHELL=/bin/bash
+thisFile := $(lastword $(MAKEFILE_LIST))
+dd:=/home/dsullivan/HSSHMP_2024/STARsoloManuscript/
+timer:=/bin/time -v
+
+# command to run before every recipe
+#prepComm := set -o history -o histexpand
+prepComm := set -v
+
+thisFile := $(lastword $(MAKEFILE_LIST))
+
+.SUFFIXES: #no implicit rules for 
+

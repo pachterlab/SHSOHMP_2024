@@ -1,0 +1,9 @@
+[index] k-mer length: 31
+[index] number of targets: 172,912
+[index] number of k-mers: 113,209,588
+[index] number of D-list k-mers: 9,649,025
+[inspect] Index version number = 13
+[inspect] number of unitigs = 820759
+[inspect] minimizer length = 23
+[inspect] max EC size = 2194
+[inspect] number of ECs discarded = 0

@@ -1,0 +1,13 @@
+{
+	"n_targets": 158430,
+	"n_bootstraps": 0,
+	"n_processed": 232479932,
+	"n_pseudoaligned": 170656368,
+	"n_unique": 97283513,
+	"p_pseudoaligned": 73.4,
+	"p_unique": 41.8,
+	"kallisto_version": "0.50.1",
+	"index_version": 13,
+	"start_time": "Fri Jan  5 08:58:14 2024",
+	"call": "/home/dsullivan/HSSHMP_2024/STARsoloManuscript/exe/kallisto_0.50.1 bus -i STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/index.idx -o ./matrices_mouse_5k_lung/ -x 10XV3 -t 20 5k_mouse_lung_CNIK_3pv3_fastqs/5k_mouse_lung_CNIK_3pv3_S4_L001_R1_001.fastq.gz 5k_mouse_lung_CNIK_3pv3_fastqs/5k_mouse_lung_CNIK_3pv3_S4_L001_R2_001.fastq.gz 5k_mouse_lung_CNIK_3pv3_fastqs/5k_mouse_lung_CNIK_3pv3_S4_L002_R1_001.fastq.gz 5k_mouse_lung_CNIK_3pv3_fastqs/5k_mouse_lung_CNIK_3pv3_S4_L002_R2_001.fastq.gz 5k_mouse_lung_CNIK_3pv3_fastqs/5k_mouse_lung_CNIK_3pv3_S4_L003_R1_001.fastq.gz 5k_mouse_lung_CNIK_3pv3_fastqs/5k_mouse_lung_CNIK_3pv3_S4_L003_R2_001.fastq.gz"
+}

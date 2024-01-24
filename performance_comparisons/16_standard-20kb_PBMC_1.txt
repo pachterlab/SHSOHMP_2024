@@ -1,0 +1,41 @@
+[2024-01-13 14:34:10,797]    INFO [count] Using index STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/standard_1/index.idx to generate BUS file to ./performance_comparisons/tmp/ from
+[2024-01-13 14:34:10,797]    INFO [count]         20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L001_R1_001.fastq.gz
+[2024-01-13 14:34:10,797]    INFO [count]         20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L001_R2_001.fastq.gz
+[2024-01-13 14:34:10,797]    INFO [count]         20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L002_R1_001.fastq.gz
+[2024-01-13 14:34:10,797]    INFO [count]         20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L002_R2_001.fastq.gz
+[2024-01-13 14:34:10,797]    INFO [count]         20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L003_R1_001.fastq.gz
+[2024-01-13 14:34:10,797]    INFO [count]         20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L003_R2_001.fastq.gz
+[2024-01-13 14:34:10,797]    INFO [count]         20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L004_R1_001.fastq.gz
+[2024-01-13 14:34:10,797]    INFO [count]         20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L004_R2_001.fastq.gz
+[2024-01-13 14:52:24,722]    INFO [count] Sorting BUS file ./performance_comparisons/tmp/output.bus to ./performance_comparisons/tmp/tmp/output.s.bus
+[2024-01-13 14:54:48,101]    INFO [count] On-list not provided
+[2024-01-13 14:54:48,102]    INFO [count] Copying pre-packaged 10XV3 on-list to ./performance_comparisons/tmp/
+[2024-01-13 14:54:49,482]    INFO [count] Inspecting BUS file ./performance_comparisons/tmp/tmp/output.s.bus
+[2024-01-13 14:55:37,189]    INFO [count] Correcting BUS records in ./performance_comparisons/tmp/tmp/output.s.bus to ./performance_comparisons/tmp/tmp/output.s.c.bus with on-list ./performance_comparisons/tmp/10x_version3_whitelist.txt
+[2024-01-13 14:56:55,455]    INFO [count] Sorting BUS file ./performance_comparisons/tmp/tmp/output.s.c.bus to ./performance_comparisons/tmp/output.unfiltered.bus
+[2024-01-13 14:58:43,181]    INFO [count] Generating count matrix ./performance_comparisons/tmp/counts_unfiltered/cells_x_genes from BUS file ./performance_comparisons/tmp/output.unfiltered.bus
+[2024-01-13 15:00:52,635]    INFO [count] Writing gene names to file ./performance_comparisons/tmp/counts_unfiltered/cells_x_genes.genes.names.txt
+[2024-01-13 15:00:52,968] WARNING [count] 48 gene IDs do not have corresponding valid gene names. These genes will use their gene IDs instead.
+	Command being timed: "kb count --kallisto STARsoloManuscript/exe/kallisto_0.50.1 --bustools STARsoloManuscript/exe/bustools_0.43.2 -t 16 -x 10XV3 --workflow standard -i STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/standard_1/index.idx -g STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/standard_1/g -o ./performance_comparisons/tmp/ --overwrite 20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L001_R1_001.fastq.gz 20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L001_R2_001.fastq.gz 20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L002_R1_001.fastq.gz 20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L002_R2_001.fastq.gz 20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L003_R1_001.fastq.gz 20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L003_R2_001.fastq.gz 20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L004_R1_001.fastq.gz 20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L004_R2_001.fastq.gz"
+	User time (seconds): 17574.35
+	System time (seconds): 103.96
+	Percent of CPU this job got: 1098%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 26:49.60
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2134348
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 1
+	Minor (reclaiming a frame) page faults: 6206725
+	Voluntary context switches: 399212
+	Involuntary context switches: 43235
+	Swaps: 0
+	File system inputs: 26200
+	File system outputs: 121157760
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

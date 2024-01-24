@@ -1,0 +1,41 @@
+[2024-01-13 22:16:25,402]    INFO [count_nac] Using index STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/index.idx to generate BUS file to ./performance_comparisons/tmp/ from
+[2024-01-13 22:16:25,402]    INFO [count_nac]         20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L001_R1_001.fastq.gz
+[2024-01-13 22:16:25,402]    INFO [count_nac]         20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L001_R2_001.fastq.gz
+[2024-01-13 22:16:25,402]    INFO [count_nac]         20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L002_R1_001.fastq.gz
+[2024-01-13 22:16:25,402]    INFO [count_nac]         20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L002_R2_001.fastq.gz
+[2024-01-13 22:16:25,402]    INFO [count_nac]         20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L003_R1_001.fastq.gz
+[2024-01-13 22:16:25,402]    INFO [count_nac]         20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L003_R2_001.fastq.gz
+[2024-01-13 22:16:25,402]    INFO [count_nac]         20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L004_R1_001.fastq.gz
+[2024-01-13 22:16:25,402]    INFO [count_nac]         20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L004_R2_001.fastq.gz
+[2024-01-13 22:59:21,717]    INFO [count_nac] Sorting BUS file ./performance_comparisons/tmp/output.bus to ./performance_comparisons/tmp/tmp/output.s.bus
+[2024-01-13 23:02:03,183]    INFO [count_nac] On-list not provided
+[2024-01-13 23:02:03,183]    INFO [count_nac] Copying pre-packaged 10XV3 on-list to ./performance_comparisons/tmp/
+[2024-01-13 23:02:04,425]    INFO [count_nac] Inspecting BUS file ./performance_comparisons/tmp/tmp/output.s.bus
+[2024-01-13 23:02:51,437]    INFO [count_nac] Correcting BUS records in ./performance_comparisons/tmp/tmp/output.s.bus to ./performance_comparisons/tmp/tmp/output.s.c.bus with on-list ./performance_comparisons/tmp/10x_version3_whitelist.txt
+[2024-01-13 23:04:08,308]    INFO [count_nac] Sorting BUS file ./performance_comparisons/tmp/tmp/output.s.c.bus to ./performance_comparisons/tmp/output.unfiltered.bus
+[2024-01-13 23:06:06,663]    INFO [count_nac] Generating count matrix ./performance_comparisons/tmp/counts_unfiltered/cells_x_genes from BUS file ./performance_comparisons/tmp/output.unfiltered.bus
+[2024-01-13 23:13:01,365]    INFO [count_nac] Writing gene names to file ./performance_comparisons/tmp/counts_unfiltered/cells_x_genes.genes.names.txt
+[2024-01-13 23:13:01,733] WARNING [count_nac] 48 gene IDs do not have corresponding valid gene names. These genes will use their gene IDs instead.
+	Command being timed: "kb count --kallisto STARsoloManuscript/exe/kallisto_0.50.1 --bustools STARsoloManuscript/exe/bustools_0.43.2 -t 16 -x 10XV3 --workflow nac -i STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/index.idx -g STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/g -c1 STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/c1 -c2 STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/c2 -o ./performance_comparisons/tmp/ --overwrite 20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L001_R1_001.fastq.gz 20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L001_R2_001.fastq.gz 20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L002_R1_001.fastq.gz 20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L002_R2_001.fastq.gz 20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L003_R1_001.fastq.gz 20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L003_R2_001.fastq.gz 20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L004_R1_001.fastq.gz 20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L004_R2_001.fastq.gz"
+	User time (seconds): 40586.36
+	System time (seconds): 174.14
+	Percent of CPU this job got: 1197%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 56:44.36
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 14957488
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 1
+	Minor (reclaiming a frame) page faults: 38359388
+	Voluntary context switches: 822612
+	Involuntary context switches: 93818
+	Swaps: 0
+	File system inputs: 19441048
+	File system outputs: 172447176
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

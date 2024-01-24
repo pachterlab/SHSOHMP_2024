@@ -1,0 +1,78 @@
+[dsullivan@tolva STARsoloManuscript]$ make -C sims                                                                                                                                                                  [220/1823]
+make: Entering directory '/home/dsullivan/HSHMP_2022/STARsoloManuscript/sims'                                                                                                                                                 
+make sim_mult   genome=human_CR_3.0.0          sample=10X/3/pbmc_5k             cbumiLen=28   cbLen=16   readLen=91   WLfile=10Xv3                                                                                            
+make[1]: Entering directory '/home/dsullivan/HSHMP_2022/STARsoloManuscript/sims'                                                                                                                                              
+cd ../genomes/human_CR_3.0.0 &&\                                                                                                                                                                                              
+        cat  genome.fa transcripts.fa > genome_transcripts.fa                                                                                                                                                                 
+cd ../genomes/human_CR_3.0.0 &&\                                                                                                                                                                                              
+        cat  genome.fa transcripts.fa | awk -O -b '{if ($1~/^>/) $0="\n" substr($1,2) " "; printf $0}' > genome_transcripts.1line.fa                                                                                          
+cd /home/dsullivan/HSHMP_2022/STARsoloManuscript//genomes/human_CR_3.0.0 &&\                                                                                                                                                  
+        cat  genome.fa transcripts.fa > genome_transcripts.fa                                                                                                                                                                 
+mkdir -p ../genomes/index/bwa/human_CR_3.0.0/trgen && cd ../genomes/index/bwa/human_CR_3.0.0/trgen &&\                                                                                                                        
+/home/dsullivan/HSHMP_2022/STARsoloManuscript//exe/bwa index -p bwaIndex /home/dsullivan/HSHMP_2022/STARsoloManuscript//genomes/human_CR_3.0.0/genome_transcripts.fa >& log.index &&\                                         
+echo "Done" > BWA_INDEX                                                                                                                                                                                                       
+mkdir -p fastq/10X/3/pbmc_5k && cd fastq/10X/3/pbmc_5k && \                                                                                                                                                                   
+paste  <(zcat /home/dsullivan/HSHMP_2022/STARsoloManuscript//samples/10X/3/pbmc_5k/*_R1_*) <(zcat /home/dsullivan/HSHMP_2022/STARsoloManuscript//samples/10X/3/pbmc_5k/*_R2_*) | \                                            
+awk -O -b '{getline; cbumi=substr($1,1,28); cdna=$2; getline;getline; ii++; name= "@" ii "_" cbumi;  print name "\n" cdna "\n+\n" $2 > "cDNA_CBUMI.fq"}' && \                                                                 
+echo "Done" > CO                                                                                                                                                                                                              
+mkdir -p bwa_map/human_CR_3.0.0/10X/3/pbmc_5k && cd bwa_map/human_CR_3.0.0/10X/3/pbmc_5k &&\                                                                                                                                  
+/home/dsullivan/HSHMP_2022/STARsoloManuscript//exe/bwa mem -a -M -t 20    /home/dsullivan/HSHMP_2022/STARsoloManuscript//genomes/index/bwa/human_CR_3.0.0/trgen/bwaIndex    /home/dsullivan/HSHMP_2022/STARsoloManuscript//si$
+s/fastq/10X/3/pbmc_5k/cDNA_CBUMI.fq  2>log.map \                                                                                                                                                                              
+        | awk -O -b -v bcLen=28 -v cbLen=16 -f /home/dsullivan/HSHMP_2022/STARsoloManuscript//sims/samToMappedAndUnmapped_mult.awk   &&\                                                                                      
+echo "Done" > BWA_MAPPED_UNMAPPED                                                                                                                                                                                             
+mkdir -p bwa_map/human_CR_3.0.0/10X/3/pbmc_5k/MultiGeneNo && cd bwa_map/human_CR_3.0.0/10X/3/pbmc_5k/MultiGeneNo && set -v &&\                                                                                                
+awk -O -b -v errRate=0.005 -v readLen=91 -v bcLen=28 -v multiGene=no -f /home/dsullivan/HSHMP_2022/STARsoloManuscript//sims/CBUMIcDNAfqFromMapped_GenicGenomic.awk \                                                          
+        /home/dsullivan/HSHMP_2022/STARsoloManuscript//genomes/human_CR_3.0.0/genome_transcripts.1line.fa \                                                                                                                   
+        /home/dsullivan/HSHMP_2022/STARsoloManuscript//genomes/human_CR_3.0.0/transcript_to_gene.txt \                                                                                                                        
+        /home/dsullivan/HSHMP_2022/STARsoloManuscript//genomes/human_CR_3.0.0/genes.tsv \                                                                                                                                     
+        /home/dsullivan/HSHMP_2022/STARsoloManuscript//data/whitelists/10Xv3 \                                                                                                                                                
+        ../Mapped.txt >& log.SIMS_FASTQ &&\                                                                                                                                                                                   
+echo "Done" > SIMS_FASTQS                                                                                                                                                                                                     
+mkdir -p /home/dsullivan/HSHMP_2022/STARsoloManuscript//samples/10X/3/pbmc_5k_sims_human_CR_3.0.0_MultiGeneNo && cd /home/dsullivan/HSHMP_2022/STARsoloManuscript//samples/10X/3/pbmc_5k_sims_human_CR_3.0.0_MultiGeneNo &&\  
+ln -fs /home/dsullivan/HSHMP_2022/STARsoloManuscript//sims/bwa_map/human_CR_3.0.0/10X/3/pbmc_5k/MultiGeneNo/cDNA.fq  _R2_.fq &&\                                                                                              
+ln -fs /home/dsullivan/HSHMP_2022/STARsoloManuscript//sims/bwa_map/human_CR_3.0.0/10X/3/pbmc_5k/MultiGeneNo/CBUMI.fq _R1_.fq                                                                                                  
+make /home/dsullivan/HSHMP_2022/STARsoloManuscript//samples/10X/3/pbmc_5k_sims_human_CR_3.0.0_MultiGeneNo/truth.mtx &&\                                                                                                       
+make /home/dsullivan/HSHMP_2022/STARsoloManuscript//samples/10X/3/pbmc_5k_sims_human_CR_3.0.0_MultiGeneNo_OnlyExonicReads                                                                                                     
+make[2]: Entering directory '/home/dsullivan/HSHMP_2022/STARsoloManuscript/sims'                                                                                                                                              
+cd /home/dsullivan/HSHMP_2022/STARsoloManuscript//samples/10X/3/pbmc_5k_sims_human_CR_3.0.0_MultiGeneNo &&\                                                                                                                   
+awk -O -b -v cbLen=16 -v geneFile=/home/dsullivan/HSHMP_2022/STARsoloManuscript//genomes/human_CR_3.0.0/genes.tsv -v whiteList=/home/dsullivan/HSHMP_2022/STARsoloManuscript//data/whitelists/10Xv3 \                         
+        -f /home/dsullivan/HSHMP_2022/STARsoloManuscript//sims/truthFromCBUMI.awk _R1_.fq | sort -k2,2n -k1,1n > truth.mtx                                                                                                    
+make[2]: Leaving directory '/home/dsullivan/HSHMP_2022/STARsoloManuscript/sims'                                                                                                                                               
+make[2]: Entering directory '/home/dsullivan/HSHMP_2022/STARsoloManuscript/sims'                                                                                                                                              
+mkdir -p /home/dsullivan/HSHMP_2022/STARsoloManuscript//samples/10X/3/pbmc_5k_sims_human_CR_3.0.0_MultiGeneNo_OnlyExonicReads &&\                                                                                             
+'cp' -f /home/dsullivan/HSHMP_2022/STARsoloManuscript//samples/10X/3/pbmc_5k_sims_human_CR_3.0.0_MultiGeneNo/truth.mtx /home/dsullivan/HSHMP_2022/STARsoloManuscript//samples/10X/3/pbmc_5k_sims_human_CR_3.0.0_MultiGeneNo_O$
+lyExonicReads &&\                                                                                                                                                                                                             
+grep --no-group-separator ENS -A3 /home/dsullivan/HSHMP_2022/STARsoloManuscript//samples/10X/3/pbmc_5k_sims_human_CR_3.0.0_MultiGeneNo/_R2_.fq > /home/dsullivan/HSHMP_2022/STARsoloManuscript//samples/10X/3/pbmc_5k_sims_hu$
+an_CR_3.0.0_MultiGeneNo_OnlyExonicReads/_R2_.fq &&\                                                                                                                                                                           
+grep --no-group-separator ENS -A3 /home/dsullivan/HSHMP_2022/STARsoloManuscript//samples/10X/3/pbmc_5k_sims_human_CR_3.0.0_MultiGeneNo/_R1_.fq > /home/dsullivan/HSHMP_2022/STARsoloManuscript//samples/10X/3/pbmc_5k_sims_hu$
+an_CR_3.0.0_MultiGeneNo_OnlyExonicReads/_R1_.fq                                                                                                                                                                               
+make[2]: Leaving directory '/home/dsullivan/HSHMP_2022/STARsoloManuscript/sims'                                                                                                                                               
+mkdir -p bwa_map/human_CR_3.0.0/10X/3/pbmc_5k/MultiGeneYes && cd bwa_map/human_CR_3.0.0/10X/3/pbmc_5k/MultiGeneYes && set -v &&\                                                                                              
+awk -O -b -v errRate=0.005 -v readLen=91 -v bcLen=28 -v multiGene=yes -f /home/dsullivan/HSHMP_2022/STARsoloManuscript//sims/CBUMIcDNAfqFromMapped_GenicGenomic.awk \                                                         
+        /home/dsullivan/HSHMP_2022/STARsoloManuscript//genomes/human_CR_3.0.0/genome_transcripts.1line.fa \                                                                                                                   
+        /home/dsullivan/HSHMP_2022/STARsoloManuscript//genomes/human_CR_3.0.0/transcript_to_gene.txt \                                                                                                                        
+        /home/dsullivan/HSHMP_2022/STARsoloManuscript//genomes/human_CR_3.0.0/genes.tsv \                                                                                                                                     
+        /home/dsullivan/HSHMP_2022/STARsoloManuscript//data/whitelists/10Xv3 \                                                                                                                                                
+        ../Mapped.txt >& log.SIMS_FASTQ &&\                                                                                                                                                                                   
+echo "Done" > SIMS_FASTQS
+mkdir -p /home/dsullivan/HSHMP_2022/STARsoloManuscript//samples/10X/3/pbmc_5k_sims_human_CR_3.0.0_MultiGeneYes && cd /home/dsullivan/HSHMP_2022/STARsoloManuscript//samples/10X/3/pbmc_5k_sims_human_CR_3.0.0_MultiGeneYes &&\
+ln -fs /home/dsullivan/HSHMP_2022/STARsoloManuscript//sims/bwa_map/human_CR_3.0.0/10X/3/pbmc_5k/MultiGeneYes/cDNA.fq  _R2_.fq &&\
+ln -fs /home/dsullivan/HSHMP_2022/STARsoloManuscript//sims/bwa_map/human_CR_3.0.0/10X/3/pbmc_5k/MultiGeneYes/CBUMI.fq _R1_.fq
+make /home/dsullivan/HSHMP_2022/STARsoloManuscript//samples/10X/3/pbmc_5k_sims_human_CR_3.0.0_MultiGeneYes/truth.mtx &&\
+make /home/dsullivan/HSHMP_2022/STARsoloManuscript//samples/10X/3/pbmc_5k_sims_human_CR_3.0.0_MultiGeneYes_OnlyExonicReads
+make[2]: Entering directory '/home/dsullivan/HSHMP_2022/STARsoloManuscript/sims'
+cd /home/dsullivan/HSHMP_2022/STARsoloManuscript//samples/10X/3/pbmc_5k_sims_human_CR_3.0.0_MultiGeneYes &&\
+awk -O -b -v cbLen=16 -v geneFile=/home/dsullivan/HSHMP_2022/STARsoloManuscript//genomes/human_CR_3.0.0/genes.tsv -v whiteList=/home/dsullivan/HSHMP_2022/STARsoloManuscript//data/whitelists/10Xv3 \
+        -f /home/dsullivan/HSHMP_2022/STARsoloManuscript//sims/truthFromCBUMI.awk _R1_.fq | sort -k2,2n -k1,1n > truth.mtx
+make[2]: Leaving directory '/home/dsullivan/HSHMP_2022/STARsoloManuscript/sims'
+make[2]: Entering directory '/home/dsullivan/HSHMP_2022/STARsoloManuscript/sims'
+mkdir -p /home/dsullivan/HSHMP_2022/STARsoloManuscript//samples/10X/3/pbmc_5k_sims_human_CR_3.0.0_MultiGeneYes_OnlyExonicReads &&\
+'cp' -f /home/dsullivan/HSHMP_2022/STARsoloManuscript//samples/10X/3/pbmc_5k_sims_human_CR_3.0.0_MultiGeneYes/truth.mtx /home/dsullivan/HSHMP_2022/STARsoloManuscript//samples/10X/3/pbmc_5k_sims_human_CR_3.0.0_MultiGeneYes_
+OnlyExonicReads &&\
+grep --no-group-separator ENS -A3 /home/dsullivan/HSHMP_2022/STARsoloManuscript//samples/10X/3/pbmc_5k_sims_human_CR_3.0.0_MultiGeneYes/_R2_.fq > /home/dsullivan/HSHMP_2022/STARsoloManuscript//samples/10X/3/pbmc_5k_sims_hu
+man_CR_3.0.0_MultiGeneYes_OnlyExonicReads/_R2_.fq &&\
+grep --no-group-separator ENS -A3 /home/dsullivan/HSHMP_2022/STARsoloManuscript//samples/10X/3/pbmc_5k_sims_human_CR_3.0.0_MultiGeneYes/_R1_.fq > /home/dsullivan/HSHMP_2022/STARsoloManuscript//samples/10X/3/pbmc_5k_sims_hu
+man_CR_3.0.0_MultiGeneYes_OnlyExonicReads/_R1_.fq
+make[2]: Leaving directory '/home/dsullivan/HSHMP_2022/STARsoloManuscript/sims'
+make[1]: Leaving directory '/home/dsullivan/HSHMP_2022/STARsoloManuscript/sims'
+make: Leaving directory '/home/dsullivan/HSHMP_2022/STARsoloManuscript/sims'
