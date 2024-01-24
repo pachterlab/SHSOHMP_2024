@@ -1,6 +1,6 @@
 # HSSHMP_2024
 
-Code for reproducing the figures and results in the preprint "Accurate quantification of single-nucleus and single-cell RNA-seq transcripts" by Kristján Eldjárn Hjörleifsson, Delaney Sullivan, Nikhila Swarna, Guillaume Holley, Páll Melsted and Lior Pachter
+Code for reproducing the figures and results in the preprint [Accurate quantification of single-nucleus and single-cell RNA-seq transcripts](https://www.biorxiv.org/content/10.1101/2022.12.02.518832v2) by Kristján Eldjárn Hjörleifsson, Delaney Sullivan, Nikhila Swarna, Guillaume Holley, Páll Melsted and Lior Pachter
 
 ## Note about human reference genome
 
@@ -21,7 +21,7 @@ salmon="$main_path/salmon-latest_linux_x86_64/bin/salmon"
 
 ## Download software
 
-### Kallisto
+### kallisto
 
 version 0.48.0
 
@@ -47,7 +47,7 @@ tar -xzvf kallisto_linux-v0.50.1.tar.gz
 mv kallisto kallisto_0.50.1
 </pre>
 
-### Bustools
+### bustools
 
 version 0.43.2
 
@@ -65,9 +65,9 @@ version 0.28.0
 yes|python -m pip uninstall kb-python
 python -m pip install kb_python==0.28.0</pre>
 
-### CellRanger
+### Cell Ranger
 
-Note: CellRanger needs to be installed manually. Version is as follows:
+Note: Cell Ranger needs to be installed manually. Version is as follows:
 
 * Cell Ranger v7.0.1 (Released August 18, 2022. Downloaded October 7, 2022)
 
@@ -132,7 +132,7 @@ tar -xvf 5k_human_jejunum_CNIK_3pv3_fastqs.tar</pre>
 <pre>wget https://s3-us-west-2.amazonaws.com/10x.files/samples/cell-exp/4.0.0/SC3_v3_NextGem_SI_Neuron_10K/SC3_v3_NextGem_SI_Neuron_10K_fastqs.tar
 tar -xvf SC3_v3_NextGem_SI_Neuron_10K_fastqs.tar</pre>
 
-### Single-nuclei
+### Single-nucleus
 
 <pre>wget https://s3-us-west-2.amazonaws.com/10x.files/samples/cell-exp/7.0.0/5k_mouse_lung_CNIK_3pv3/5k_mouse_lung_CNIK_3pv3_fastqs.tar
 tar -xvf 5k_mouse_lung_CNIK_3pv3_fastqs.tar</pre>
@@ -243,7 +243,6 @@ Note: After the following commands are run, the analysis_dlist_performance.ipynb
 <pre>mkdir -p performance_comparisons/</pre>
 
 ### Human 20k pbmc
-
 
 nac + offlist:
 
