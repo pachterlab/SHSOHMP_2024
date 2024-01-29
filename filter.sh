@@ -4,31 +4,44 @@
 # (Note: The output path should be organized exactly like the output from kb count; with a kallisto_output/counts_unfiltered directory and cells_x_genes.total.mtx is where the post-filtering barcodes are extracted if we use --sum=total to generate 6 matrices)
 # (Note: 500 is the UMI threshold here, but you can change it to whatever)
 
+# Alternate usage: ./filter.sh kallisto_output 500 counts_unfiltered_modified counts_filtered_modified
+# Same as the standard usage except can specify specific input and output directories within kallisto_output
+
 directory="$1"
 umi_filter="$2"
+counts_unfiltered="$3"
+counts_filtered="$4"
+
+if [[ -z $counts_unfiltered ]]; then
+counts_unfiltered="counts_unfiltered"
+fi
+
+if [[ -z $counts_filtered ]]; then
+counts_filtered="counts_filtered"
+fi
 
 function finalmtx() {
 # Usage: finalmtx ${directory}
 directory="$1"
 
-if [ -f ${directory}/counts_unfiltered/cells_x_genes.total.mtx ]; then
+if [ -f ${directory}/${counts_unfiltered}/cells_x_genes.total.mtx ]; then
 echo "Processing Total Matrix: $directory $umi_filter"
-processmtx ${directory}/counts_unfiltered ${directory}/counts_filtered cells_x_genes.total.mtx
+processmtx ${directory}/${counts_unfiltered} ${directory}/${counts_filtered} cells_x_genes.total.mtx
 echo "Processing Other Matrices: $directory $umi_filter"
-processmtx2 ${directory}/counts_unfiltered ${directory}/counts_filtered cells_x_genes.mature.mtx
-processmtx2 ${directory}/counts_unfiltered ${directory}/counts_filtered cells_x_genes.nascent.mtx
-processmtx2 ${directory}/counts_unfiltered ${directory}/counts_filtered cells_x_genes.ambiguous.mtx
-processmtx2 ${directory}/counts_unfiltered ${directory}/counts_filtered cells_x_genes.cell.mtx
-processmtx2 ${directory}/counts_unfiltered ${directory}/counts_filtered cells_x_genes.nucleus.mtx
-processfin ${directory}/counts_unfiltered ${directory}/counts_filtered cells_x_genes.total.mtx
+processmtx2 ${directory}/${counts_unfiltered} ${directory}/${counts_filtered} cells_x_genes.mature.mtx
+processmtx2 ${directory}/${counts_unfiltered} ${directory}/${counts_filtered} cells_x_genes.nascent.mtx
+processmtx2 ${directory}/${counts_unfiltered} ${directory}/${counts_filtered} cells_x_genes.ambiguous.mtx
+processmtx2 ${directory}/${counts_unfiltered} ${directory}/${counts_filtered} cells_x_genes.cell.mtx
+processmtx2 ${directory}/${counts_unfiltered} ${directory}/${counts_filtered} cells_x_genes.nucleus.mtx
+processfin ${directory}/${counts_unfiltered} ${directory}/${counts_filtered} cells_x_genes.total.mtx
 else
-processmtx ${directory}/counts_unfiltered ${directory}/counts_filtered cells_x_genes.mtx
-processfin ${directory}/counts_unfiltered ${directory}/counts_filtered cells_x_genes.mtx
+processmtx ${directory}/${counts_unfiltered} ${directory}/${counts_filtered} cells_x_genes.mtx
+processfin ${directory}/${counts_unfiltered} ${directory}/${counts_filtered} cells_x_genes.mtx
 fi
 }
 
 function processmtx() {
-# Usage: processmtx ${directory}/counts_unfiltered ${directory}/counts_filtered cells_x_genes.total.mtx
+# Usage: processmtx ${directory}/${counts_unfiltered} ${directory}/${counts_filtered} cells_x_genes.total.mtx
 in_dir="$1/"
 out_dir="$2/"
 mtx="$3"
@@ -53,7 +66,7 @@ rm ${out_dir}${mtx}.refactored.tmp
 }
 
 function processmtx2() {
-# Usage: processmtx2 ${directory}/counts_unfiltered ${directory}/counts_filtered cells_x_genes.mtx
+# Usage: processmtx2 ${directory}/${counts_unfiltered} ${directory}/${counts_filtered} cells_x_genes.mtx
 in_dir="$1/"
 out_dir="$2/"
 mtx="$3"
@@ -76,7 +89,7 @@ rm ${out_dir}${mtx}.refactored.tmp
 }
 
 function processfin() {
-# Usage: processfin ${directory}/counts_unfiltered ${directory}/counts_filtered cells_x_genes.total.mtx
+# Usage: processfin ${directory}/${counts_unfiltered} ${directory}/${counts_filtered} cells_x_genes.total.mtx
 in_dir="$1/"
 out_dir="$2/"
 mtx="$3"
@@ -84,4 +97,3 @@ rm -f ${out_dir}rows.tmp
 }
 
 finalmtx ${directory} ${out_dir} ${mtx}
-
