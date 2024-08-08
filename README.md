@@ -234,13 +234,13 @@ Let's now use the script from the simulations (where we compared output matrix v
 
 The final analysis is produced in the matrix_comparisons.ipynb python notebook file.
 
-## Runtime and memory benchmarks of kallisto
+## Runtime and memory benchmarks of kallisto (and mapping comparisons)
 
 Note: kb-python already uses the 10xv3 prepackaged on-list.
 
 Note: After the following commands are run, the analysis_dlist_performance.ipynb python notebook contains the final plots.
 
-<pre>mkdir -p performance_comparisons/</pre>
+<pre>mkdir -p performance_comparisons/out/</pre>
 
 ### Human 20k pbmc
 
@@ -252,7 +252,7 @@ cmd2=" -x 10XV3 \
     -g STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/g \
     -c1 STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/c1 \
     -c2 STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/c2 \
-    -o ./performance_comparisons/tmp/ --overwrite \
+    -o ./performance_comparisons/out/nac_offlist-20kb_PBMC/ --overwrite \
     20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L001_R1_001.fastq.gz \
     20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L001_R2_001.fastq.gz \
     20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L002_R1_001.fastq.gz \
@@ -273,7 +273,7 @@ cmd2=" -x 10XV3 \
     -g STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_1/g \
     -c1 STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_1/c1 \
     -c2 STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_1/c2 \
-    -o ./performance_comparisons/tmp/ --overwrite \
+    -o ./performance_comparisons/out/nac-20kb_PBMC/ --overwrite \
     20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L001_R1_001.fastq.gz \
     20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L001_R2_001.fastq.gz \
     20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L002_R1_001.fastq.gz \
@@ -292,7 +292,7 @@ standard + offlist:
 cmd2=" -x 10XV3 \
     --workflow standard -i STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/standard_offlist_1/index.idx \
     -g STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/standard_offlist_1/g \
-    -o ./performance_comparisons/tmp/ --overwrite \
+    -o ./performance_comparisons/out/standard_offlist-20kb_PBMC/ --overwrite \
     20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L001_R1_001.fastq.gz \
     20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L001_R2_001.fastq.gz \
     20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L002_R1_001.fastq.gz \
@@ -311,7 +311,7 @@ standard (no offlist):
 cmd2=" -x 10XV3 \
     --workflow standard -i STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/standard_1/index.idx \
     -g STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/standard_1/g \
-    -o ./performance_comparisons/tmp/ --overwrite \
+    -o ./performance_comparisons/out/standard-20kb_PBMC/ --overwrite \
     20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L001_R1_001.fastq.gz \
     20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L001_R2_001.fastq.gz \
     20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L002_R1_001.fastq.gz \
@@ -334,7 +334,7 @@ cmd2=" -x 10XV3 \
     -g STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/g \
     -c1 STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/c1 \
     -c2 STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/c2 \
-    -o ./performance_comparisons/tmp/ --overwrite \
+    -o ./performance_comparisons/out/nac_offlist-5kb_jejunum/ --overwrite \
     5k_human_jejunum_CNIK_3pv3_fastqs/5k_human_jejunum_CNIK_3pv3_S1_L001_R1_001.fastq.gz \
     5k_human_jejunum_CNIK_3pv3_fastqs/5k_human_jejunum_CNIK_3pv3_S1_L001_R2_001.fastq.gz \
     5k_human_jejunum_CNIK_3pv3_fastqs/5k_human_jejunum_CNIK_3pv3_S1_L002_R1_001.fastq.gz \
@@ -355,7 +355,7 @@ cmd2=" -x 10XV3 \
     -g STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_1/g \
     -c1 STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_1/c1 \
     -c2 STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_1/c2 \
-    -o ./performance_comparisons/tmp/ --overwrite \
+    -o ./performance_comparisons/out/nac-5kb_jejunum/ --overwrite \
     5k_human_jejunum_CNIK_3pv3_fastqs/5k_human_jejunum_CNIK_3pv3_S1_L001_R1_001.fastq.gz \
     5k_human_jejunum_CNIK_3pv3_fastqs/5k_human_jejunum_CNIK_3pv3_S1_L001_R2_001.fastq.gz \
     5k_human_jejunum_CNIK_3pv3_fastqs/5k_human_jejunum_CNIK_3pv3_S1_L002_R1_001.fastq.gz \
@@ -368,6 +368,44 @@ cmd2=" -x 10XV3 \
 /usr/bin/time -v $cmd1 16 $cmd2 2> performance_comparisons/16_nac-5kb_jejunum_1.txt
 </pre>
 
+standard + offlist:
+
+<pre>cmd1="kb count --kallisto STARsoloManuscript/exe/kallisto_0.50.1 --bustools STARsoloManuscript/exe/bustools_0.43.2 -t "
+cmd2=" -x 10XV3 \
+    --workflow standard -i STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/standard_offlist_1/index.idx \
+    -g STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/standard_offlist_1/g \
+    -o ./performance_comparisons/out/standard_offlist-5kb_jejunum/ --overwrite \
+    5k_human_jejunum_CNIK_3pv3_fastqs/5k_human_jejunum_CNIK_3pv3_S1_L001_R1_001.fastq.gz \
+    5k_human_jejunum_CNIK_3pv3_fastqs/5k_human_jejunum_CNIK_3pv3_S1_L001_R2_001.fastq.gz \
+    5k_human_jejunum_CNIK_3pv3_fastqs/5k_human_jejunum_CNIK_3pv3_S1_L002_R1_001.fastq.gz \
+    5k_human_jejunum_CNIK_3pv3_fastqs/5k_human_jejunum_CNIK_3pv3_S1_L002_R2_001.fastq.gz \
+    5k_human_jejunum_CNIK_3pv3_fastqs/5k_human_jejunum_CNIK_3pv3_S1_L003_R1_001.fastq.gz \
+    5k_human_jejunum_CNIK_3pv3_fastqs/5k_human_jejunum_CNIK_3pv3_S1_L003_R2_001.fastq.gz \
+    5k_human_jejunum_CNIK_3pv3_fastqs/5k_human_jejunum_CNIK_3pv3_S1_L004_R1_001.fastq.gz \
+    5k_human_jejunum_CNIK_3pv3_fastqs/5k_human_jejunum_CNIK_3pv3_S1_L004_R2_001.fastq.gz"
+
+$cmd1 16 $cmd2
+
+</pre>
+
+standard (no offlist):
+
+<pre>cmd1="kb count --kallisto STARsoloManuscript/exe/kallisto_0.50.1 --bustools STARsoloManuscript/exe/bustools_0.43.2 -t "
+cmd2=" -x 10XV3 \
+    --workflow standard -i STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/standard_1/index.idx \
+    -g STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/standard_1/g \
+    -o ./performance_comparisons/out/standard-5kb_jejunum/ --overwrite \
+    5k_human_jejunum_CNIK_3pv3_fastqs/5k_human_jejunum_CNIK_3pv3_S1_L001_R1_001.fastq.gz \
+    5k_human_jejunum_CNIK_3pv3_fastqs/5k_human_jejunum_CNIK_3pv3_S1_L001_R2_001.fastq.gz \
+    5k_human_jejunum_CNIK_3pv3_fastqs/5k_human_jejunum_CNIK_3pv3_S1_L002_R1_001.fastq.gz \
+    5k_human_jejunum_CNIK_3pv3_fastqs/5k_human_jejunum_CNIK_3pv3_S1_L002_R2_001.fastq.gz \
+    5k_human_jejunum_CNIK_3pv3_fastqs/5k_human_jejunum_CNIK_3pv3_S1_L003_R1_001.fastq.gz \
+    5k_human_jejunum_CNIK_3pv3_fastqs/5k_human_jejunum_CNIK_3pv3_S1_L003_R2_001.fastq.gz \
+    5k_human_jejunum_CNIK_3pv3_fastqs/5k_human_jejunum_CNIK_3pv3_S1_L004_R1_001.fastq.gz \
+    5k_human_jejunum_CNIK_3pv3_fastqs/5k_human_jejunum_CNIK_3pv3_S1_L004_R2_001.fastq.gz"
+
+$cmd1 16 $cmd2
+
 ### Mouse 10k neuron
 
 
@@ -379,7 +417,7 @@ cmd2=" -x 10XV3 \
     -g STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/g \
     -c1 STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/c1 \
     -c2 STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/c2 \
-    -o ./performance_comparisons/tmp/ --overwrite \
+    -o ./performance_comparisons/out/nac_offlist-10kb_neuron/ --overwrite \
     SC3_v3_NextGem_SI_Neuron_10K_fastqs/SC3_v3_NextGem_SI_Neuron_10K_S1_L002_R1_001.fastq.gz \
     SC3_v3_NextGem_SI_Neuron_10K_fastqs/SC3_v3_NextGem_SI_Neuron_10K_S1_L002_R2_001.fastq.gz \
     SC3_v3_NextGem_SI_Neuron_10K_fastqs/SC3_v3_NextGem_SI_Neuron_10K_S1_L003_R1_001.fastq.gz \
@@ -398,7 +436,7 @@ cmd2=" -x 10XV3 \
     -g STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_1/g \
     -c1 STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_1/c1 \
     -c2 STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_1/c2 \
-    -o ./performance_comparisons/tmp/ --overwrite \
+    -o ./performance_comparisons/out/nac-10kb_neuron/ --overwrite \
     SC3_v3_NextGem_SI_Neuron_10K_fastqs/SC3_v3_NextGem_SI_Neuron_10K_S1_L002_R1_001.fastq.gz \
     SC3_v3_NextGem_SI_Neuron_10K_fastqs/SC3_v3_NextGem_SI_Neuron_10K_S1_L002_R2_001.fastq.gz \
     SC3_v3_NextGem_SI_Neuron_10K_fastqs/SC3_v3_NextGem_SI_Neuron_10K_S1_L003_R1_001.fastq.gz \
@@ -415,7 +453,7 @@ standard + offlist:
 cmd2=" -x 10XV3 \
     --workflow standard -i STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/standard_offlist_1/index.idx \
     -g STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/standard_offlist_1/g \
-    -o ./performance_comparisons/tmp/ --overwrite \
+    -o ./performance_comparisons/out/standard_offlist-10kb_neuron/ --overwrite \
     SC3_v3_NextGem_SI_Neuron_10K_fastqs/SC3_v3_NextGem_SI_Neuron_10K_S1_L002_R1_001.fastq.gz \
     SC3_v3_NextGem_SI_Neuron_10K_fastqs/SC3_v3_NextGem_SI_Neuron_10K_S1_L002_R2_001.fastq.gz \
     SC3_v3_NextGem_SI_Neuron_10K_fastqs/SC3_v3_NextGem_SI_Neuron_10K_S1_L003_R1_001.fastq.gz \
@@ -432,7 +470,7 @@ standard (no offlist):
 cmd2=" -x 10XV3 \
     --workflow standard -i STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/standard_1/index.idx \
     -g STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/standard_1/g \
-    -o ./performance_comparisons/tmp/ --overwrite \
+    -o ./performance_comparisons/out/standard-10kb_neuron/ --overwrite \
     SC3_v3_NextGem_SI_Neuron_10K_fastqs/SC3_v3_NextGem_SI_Neuron_10K_S1_L002_R1_001.fastq.gz \
     SC3_v3_NextGem_SI_Neuron_10K_fastqs/SC3_v3_NextGem_SI_Neuron_10K_S1_L002_R2_001.fastq.gz \
     SC3_v3_NextGem_SI_Neuron_10K_fastqs/SC3_v3_NextGem_SI_Neuron_10K_S1_L003_R1_001.fastq.gz \
@@ -453,7 +491,7 @@ cmd2=" -x 10XV3 \
     -g STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/g \
     -c1 STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/c1 \
     -c2 STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/c2 \
-    -o ./performance_comparisons/tmp/ --overwrite \
+    -o ./performance_comparisons/out/nac_offlist-5kb_lung/ --overwrite \
     5k_mouse_lung_CNIK_3pv3_fastqs/5k_mouse_lung_CNIK_3pv3_S4_L001_R1_001.fastq.gz \
     5k_mouse_lung_CNIK_3pv3_fastqs/5k_mouse_lung_CNIK_3pv3_S4_L001_R2_001.fastq.gz \
     5k_mouse_lung_CNIK_3pv3_fastqs/5k_mouse_lung_CNIK_3pv3_S4_L002_R1_001.fastq.gz \
@@ -472,7 +510,7 @@ cmd2=" -x 10XV3 \
     -g STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_1/g \
     -c1 STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_1/c1 \
     -c2 STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_1/c2 \
-    -o ./performance_comparisons/tmp/ --overwrite \
+    -o ./performance_comparisons/out/16_nac-5kb_lung/ --overwrite \
     5k_mouse_lung_CNIK_3pv3_fastqs/5k_mouse_lung_CNIK_3pv3_S4_L001_R1_001.fastq.gz \
     5k_mouse_lung_CNIK_3pv3_fastqs/5k_mouse_lung_CNIK_3pv3_S4_L001_R2_001.fastq.gz \
     5k_mouse_lung_CNIK_3pv3_fastqs/5k_mouse_lung_CNIK_3pv3_S4_L002_R1_001.fastq.gz \
