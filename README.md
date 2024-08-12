@@ -652,7 +652,7 @@ $cmd1 24 $cmd2</pre>
 
 Obtain TCCs:
 
-<pre>$bustools count -o ./smartseq3/smartseq3_nac_offlist/counts_unfiltered_umi/cells_x_tcc -g STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/g -e ./smartseq3/smartseq3_nac_offlist/matrix.ec -t ./smartseq3/smartseq3_nac_offlist/transcripts.txt -s STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/c2 --umi-gene ./smartseq3/smartseq3_nac_offlist/output_umi.unfiltered.bus
+<pre>$bustools count -o ./smartseq3/smartseq3_nac_offlist/counts_unfiltered_umi/cells_x_tcc -g STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/g -e ./smartseq3/smartseq3_nac_offlist/matrix.ec -t ./smartseq3/smartseq3_nac_offlist/transcripts.txt -s STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/c2 --umi-gene ./smartseq3/smartseq3_nac_offlist/output_umi.unfiltered.bus
 </pre>
 
 
