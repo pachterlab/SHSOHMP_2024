@@ -557,4 +557,38 @@ cmd2=" -x 10XV3 \
 $cmd1 16 $cmd2
 </pre>
 
+# Smart-seq3 processing (HCA sample)
+
+Note: Please install splitcode (version 0.30.0) to preprocess this data - https://github.com/pachterlab/splitcode
+
+Get PBMC+HEK annotations and barcodes:
+
+<pre>wget --continue https://ftp.ebi.ac.uk/biostudies/fire/E-MTAB-/735/E-MTAB-8735/Files/Smart3.PBMC.annotated.txt
+cat Smart3.PBMC.annotated.txt|tail -n+2|cut -f1 > Smart3.HCA.annotated.PBMC.txt</pre>
+
+Get data:
+
+<pre>wget ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-8735/HCA.R1.fastq.gz
+wget ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-8735/HCA.R2.fastq.gz
+wget ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-8735/HCA.I1.fastq.gz
+wget ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-8735/HCA.I2.fastq.gz</pre>
+
+Process:
+
+<pre>mkdir -p smartseq3</pre>
+
+<pre>cmd1="kb count --kallisto STARsoloManuscript/exe/kallisto_0.50.1 --bustools STARsoloManuscript/exe/bustools_0.43.2 -t "
+cmd2=" -x smartseq3 -w Smart3.HCA.annotated.PBMC.txt \
+    --workflow nac -i STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/index.idx \
+    -g STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/g \
+    -c1 STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/c1 \
+    -c2 STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/c2 \
+    -o ./smartseq3/smartseq3_nac_offlist/ --overwrite \
+    HCA.I1.fastq.gz \
+    HCA.I2.fastq.gz \
+    HCA.R1.fastq.gz \
+    HCA.R2.fastq.gz"
+
+$cmd1 16 $cmd2</pre>
+
 
