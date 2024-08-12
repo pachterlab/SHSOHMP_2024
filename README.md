@@ -526,8 +526,8 @@ standard + offlist:
 
 <pre>cmd1="kb count --kallisto STARsoloManuscript/exe/kallisto_0.50.1 --bustools STARsoloManuscript/exe/bustools_0.43.2 -t "
 cmd2=" -x 10XV3 \
-    --workflow standard -i STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/standard_offlist_1/index.idx \
-    -g STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/standard_offlist_1/g \
+    --workflow standard -i STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/standard_offlist_1/index.idx \
+    -g STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/standard_offlist_1/g \
     -o ./performance_comparisons/out/standard_offlist-5kb_lung/ --overwrite \
     5k_mouse_lung_CNIK_3pv3_fastqs/5k_mouse_lung_CNIK_3pv3_S4_L001_R1_001.fastq.gz \
     5k_mouse_lung_CNIK_3pv3_fastqs/5k_mouse_lung_CNIK_3pv3_S4_L001_R2_001.fastq.gz \
@@ -544,8 +544,8 @@ standard (no offlist):
 
 <pre>cmd1="kb count --kallisto STARsoloManuscript/exe/kallisto_0.50.1 --bustools STARsoloManuscript/exe/bustools_0.43.2 -t "
 cmd2=" -x 10XV3 \
-    --workflow standard -i STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/standard_1/index.idx \
-    -g STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/standard_1/g \
+    --workflow standard -i STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/standard_1/index.idx \
+    -g STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/standard_1/g \
     -o ./performance_comparisons/out/standard-5kb_lung/ --overwrite \
     5k_mouse_lung_CNIK_3pv3_fastqs/5k_mouse_lung_CNIK_3pv3_S4_L001_R1_001.fastq.gz \
     5k_mouse_lung_CNIK_3pv3_fastqs/5k_mouse_lung_CNIK_3pv3_S4_L001_R2_001.fastq.gz \
@@ -593,8 +593,8 @@ standard + offlist:
 
 <pre>cmd1="kb count --kallisto STARsoloManuscript/exe/kallisto_0.50.1 --bustools STARsoloManuscript/exe/bustools_0.43.2 -t "
 cmd2=" -x 10XV3 \
-    --workflow standard -i STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/standard_offlist_1/index.idx \
-    -g STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/standard_offlist_1/g \
+    --workflow standard -i STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/standard_offlist_1/index.idx \
+    -g STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/standard_offlist_1/g \
     -o ./performance_comparisons/out/standard_offlist-mouse_ffpe/ --overwrite \
     CytAssist_11mm_FFPE_Mouse_Embryo_fastqs/CytAssist_11mm_FFPE_Mouse_Embryo_S1_L004_R1_001.fastq.gz \
     CytAssist_11mm_FFPE_Mouse_Embryo_fastqs/CytAssist_11mm_FFPE_Mouse_Embryo_S1_L004_R2_001.fastq.gz"
@@ -606,8 +606,8 @@ standard (no offlist):
 
 <pre>cmd1="kb count --kallisto STARsoloManuscript/exe/kallisto_0.50.1 --bustools STARsoloManuscript/exe/bustools_0.43.2 -t "
 cmd2=" -x 10XV3 \
-    --workflow standard -i STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/standard_1/index.idx \
-    -g STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/standard_1/g \
+    --workflow standard -i STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/standard_1/index.idx \
+    -g STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/standard_1/g \
     -o ./performance_comparisons/out/standard-mouse_ffpe/ --overwrite \
     CytAssist_11mm_FFPE_Mouse_Embryo_fastqs/CytAssist_11mm_FFPE_Mouse_Embryo_S1_L004_R1_001.fastq.gz \
     CytAssist_11mm_FFPE_Mouse_Embryo_fastqs/CytAssist_11mm_FFPE_Mouse_Embryo_S1_L004_R2_001.fastq.gz"
