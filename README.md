@@ -562,7 +562,7 @@ $cmd1 16 $cmd2
 nac + offlist:
 
 <pre>cmd1="kb count --kallisto STARsoloManuscript/exe/kallisto_0.50.1 --bustools STARsoloManuscript/exe/bustools_0.43.2 -t "
-cmd2=" -x 10XV3 \
+cmd2=" -x 10XV3 --strand=unstranded \
     --workflow nac -i STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/index.idx \
     -g STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/g \
     -c1 STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/c1 \
@@ -577,7 +577,7 @@ $cmd1 16 $cmd2
 nac (no offlist):
 
 <pre>cmd1="kb count --kallisto STARsoloManuscript/exe/kallisto_0.50.1 --bustools STARsoloManuscript/exe/bustools_0.43.2 -t "
-cmd2=" -x 10XV3 \
+cmd2=" -x 10XV3 --strand=unstranded \
     --workflow nac -i STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_1/index.idx \
     -g STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_1/g \
     -c1 STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_1/c1 \
@@ -592,7 +592,7 @@ $cmd1 16 $cmd2
 standard + offlist:
 
 <pre>cmd1="kb count --kallisto STARsoloManuscript/exe/kallisto_0.50.1 --bustools STARsoloManuscript/exe/bustools_0.43.2 -t "
-cmd2=" -x 10XV3 \
+cmd2=" -x 10XV3 --strand=unstranded \
     --workflow standard -i STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/standard_offlist_1/index.idx \
     -g STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/standard_offlist_1/g \
     -o ./performance_comparisons/out/standard_offlist-mouse_ffpe/ --overwrite \
@@ -605,7 +605,7 @@ $cmd1 16 $cmd2
 standard (no offlist):
 
 <pre>cmd1="kb count --kallisto STARsoloManuscript/exe/kallisto_0.50.1 --bustools STARsoloManuscript/exe/bustools_0.43.2 -t "
-cmd2=" -x 10XV3 \
+cmd2=" -x 10XV3 --strand=unstranded \
     --workflow standard -i STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/standard_1/index.idx \
     -g STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/standard_1/g \
     -o ./performance_comparisons/out/standard-mouse_ffpe/ --overwrite \
