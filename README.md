@@ -638,16 +638,21 @@ Process:
 
 <pre>cmd1="kb count --kallisto STARsoloManuscript/exe/kallisto_0.50.1 --bustools STARsoloManuscript/exe/bustools_0.43.2 -t "
 cmd2=" -x smartseq3 -w Smart3.HCA.annotated.PBMC.txt \
-    --workflow nac -i STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/index.idx \
-    -g STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/g \
-    -c1 STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/c1 \
-    -c2 STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/c2 \
+    --workflow nac -i STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/index.idx \
+    -g STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/g \
+    -c1 STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/c1 \
+    -c2 STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/c2 \
     -o ./smartseq3/smartseq3_nac_offlist/ --overwrite \
     HCA.I1.fastq.gz \
     HCA.I2.fastq.gz \
     HCA.R1.fastq.gz \
     HCA.R2.fastq.gz"
 
-$cmd1 16 $cmd2</pre>
+$cmd1 24 $cmd2</pre>
+
+Obtain TCCs:
+
+<pre>$bustools count -o ./smartseq3/smartseq3_nac_offlist/counts_unfiltered_umi/cells_x_tcc -g STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/g -e ./smartseq3/smartseq3_nac_offlist/matrix.ec -t ./smartseq3/smartseq3_nac_offlist/transcripts.txt -s STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/c2 --umi-gene ./smartseq3/smartseq3_nac_offlist/output_umi.unfiltered.bus
+</pre>
 
 
