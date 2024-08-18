@@ -671,7 +671,7 @@ cat Smart3.PBMC.annotated.txt|grep $'\t'"CD14 monocytes"$'\t'|cut -f1 > Smart3.H
 
 Second, let's combine the I1 and I2 index files of the Smart-seq3 reads into one:
 
-<pre>splitcode --gzip -t 16 -N 2 --x-only -x "0:0<HCA_I_combined>0:-1,1:0<HCA_I_combined>1:-1" HCA.I1.fastq.gz HCA.I2.fastq.gz</pre>
+<pre>splitcode --gzip -t 16 -N 2 --x-only -x "0:0&lt;HCA_I_combined&gt;0:-1,1:0&lt;HCA_I_combined&gt;1:-1" HCA.I1.fastq.gz HCA.I2.fastq.gz</pre>
 
 Now, let's run splitcode twice to extract the UMI-containing reads specific to NK cells and the reads specific to CD14 monocytes (note: with the proper config file, splitcode could, in theory, do this in one step rather than two).
 
