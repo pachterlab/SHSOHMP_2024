@@ -657,3 +657,19 @@ Obtain TCCs:
 
 
 <pre>$kallisto quant-tcc -o smartseq3/smartseq3_nac_offlist/quant_unfiltered/ -t 24 --matrix-to-files --plaintext -i STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/index.idx -g STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/g -e smartseq3/smartseq3_nac_offlist/counts_unfiltered_umi/cells_x_tcc.ec.txt smartseq3/smartseq3_nac_offlist/counts_unfiltered_umi/cells_x_tcc.mtx</pre>
+
+Now, let's look at NK cells vs. CD14 monocytes. First let's get their barcodes:
+
+<pre>cat Smart3.PBMC.annotated.txt|grep $'\t'"NK cells"$'\t'|cut -f1 > Smart3.HCA.annotated.NK_cells.txt
+cat Smart3.PBMC.annotated.txt|grep $'\t'"CD14 monocytes"$'\t'|cut -f1 > Smart3.HCA.annotated.CD14_monocytes.txt</pre>
+
+Second, let's combine the I1 and I2 index files of the Smart-seq3 reads into one:
+
+<pre>splitcode --gzip -t 16 -N 2 --x-only -x "0:0<HCA_I_combined>0:-1,1:0<HCA_I_combined>1:-1" HCA.I1.fastq.gz HCA.I2.fastq.gz</pre>
+
+Now, let's run splitcode twice to extract the UMI-containing reads specific to NK cells and the reads specific to CD14 monocytes (note: with the proper config file, splitcode could, in theory, do this in one step rather than two).
+
+<pre>splitcode -t 16 -c smartseq3_splitcode_config_NK_cells.txt --nFastqs=3 --gzip --x-only HCA_I_combined.fastq.gz HCA.R1.fastq.gz HCA.R2.fastq.gz
+splitcode -t 16 -c smartseq3_splitcode_config_CD14_monocytes.txt --nFastqs=3 --gzip --x-only HCA_I_combined.fastq.gz HCA.R1.fastq.gz HCA.R2.fastq.gz</pre>
+
+
