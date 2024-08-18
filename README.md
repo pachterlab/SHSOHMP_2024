@@ -637,7 +637,7 @@ Process:
 <pre>mkdir -p smartseq3</pre>
 
 <pre>cmd1="kb count --kallisto STARsoloManuscript/exe/kallisto_0.50.1 --bustools STARsoloManuscript/exe/bustools_0.43.2 -t "
-cmd2=" -x smartseq3 -w Smart3.HCA.annotated.PBMC.txt \
+cmd2=" -x smartseq3 -w Smart3.HCA.annotated.PBMC.txt --sum=total \
     --workflow nac -i STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/index.idx \
     -g STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/g \
     -c1 STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/c1 \
