@@ -704,4 +704,6 @@ STARsoloManuscript/exe/STAR_2.7.9a \
 --outFileNamePrefix "smartseq3_star_CD14_monocytes/" \
 --readFilesIn "smartseq3_CD14_monocytes_R1.fastq.gz" "smartseq3_CD14_monocytes_R2.fastq.gz"</pre>
 
+The resulting Aligned.sortedByCoord.out.bam in the two output directories can be inspected on a genome browser such as IGV after indexing with samtools.
+
 
