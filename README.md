@@ -660,7 +660,7 @@ Obtain TCCs:
 
 <pre>$kallisto quant-tcc -o smartseq3/smartseq3_nac_offlist/quant_unfiltered/ -t 24 --matrix-to-files --plaintext -i STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/index.idx -g STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/g -e smartseq3/smartseq3_nac_offlist/counts_unfiltered_umi/cells_x_tcc.ec.txt smartseq3/smartseq3_nac_offlist/counts_unfiltered_umi/cells_x_tcc.mtx</pre>
 
-### Format reads for processing via STAR
+### Format reads for STAR alignment
 
 Note: Please install splitcode (version 0.30.0) to preprocess this data - https://github.com/pachterlab/splitcode
 
@@ -677,5 +677,29 @@ Now, let's run splitcode twice to extract the UMI-containing reads specific to N
 
 <pre>splitcode -t 16 -c smartseq3_splitcode_config_NK_cells.txt --nFastqs=3 --gzip --x-only HCA_I_combined.fastq.gz HCA.R1.fastq.gz HCA.R2.fastq.gz
 splitcode -t 16 -c smartseq3_splitcode_config_CD14_monocytes.txt --nFastqs=3 --gzip --x-only HCA_I_combined.fastq.gz HCA.R1.fastq.gz HCA.R2.fastq.gz</pre>
+
+### Perform STAR alignment
+
+<pre>mkdir -p smartseq3_star_NK_cells
+STARsoloManuscript/exe/STAR_2.7.9a \
+--genomeDir "STARsoloManuscript/genomes/index/STAR_2.7.9a/human_CR_3.0.0/fullSA" \
+--runThreadN 16 \
+--readFilesCommand zcat \
+--clip5pNbases 28 0 \
+--outSAMtype BAM SortedByCoordinate \
+--outFilterType BySJout \
+--outFileNamePrefix "smartseq3_star_NK_cells/" \
+--readFilesIn "smartseq3_NK_cells_R1.fastq.gz" "smartseq3_NK_cells_R2.fastq.gz"
+
+mkdir -p smartseq3_star_CD14_monocytes
+STARsoloManuscript/exe/STAR_2.7.9a \
+--genomeDir "STARsoloManuscript/genomes/index/STAR_2.7.9a/human_CR_3.0.0/fullSA" \
+--runThreadN 16 \
+--readFilesCommand zcat \
+--clip5pNbases 28 0 \
+--outSAMtype BAM SortedByCoordinate \
+--outFilterType BySJout \
+--outFileNamePrefix "smartseq3_star_CD14_monocytes/" \
+--readFilesIn "smartseq3_CD14_monocytes_R1.fastq.gz" "smartseq3_CD14_monocytes_R2.fastq.gz"</pre>
 
 
