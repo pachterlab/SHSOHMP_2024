@@ -618,7 +618,7 @@ $cmd1 16 $cmd2
 
 # Smart-seq3 processing (HCA sample)
 
-Note: Please install splitcode (version 0.30.0) to preprocess this data - https://github.com/pachterlab/splitcode
+### Obtain data
 
 Get PBMC+HEK annotations and barcodes:
 
@@ -631,6 +631,8 @@ Get data:
 wget ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-8735/HCA.R2.fastq.gz
 wget ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-8735/HCA.I1.fastq.gz
 wget ftp://ftp.ebi.ac.uk/pub/databases/microarray/data/experiment/MTAB/E-MTAB-8735/HCA.I2.fastq.gz</pre>
+
+### Process using kallisto
 
 Process:
 
@@ -657,6 +659,10 @@ Obtain TCCs:
 
 
 <pre>$kallisto quant-tcc -o smartseq3/smartseq3_nac_offlist/quant_unfiltered/ -t 24 --matrix-to-files --plaintext -i STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/index.idx -g STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/g -e smartseq3/smartseq3_nac_offlist/counts_unfiltered_umi/cells_x_tcc.ec.txt smartseq3/smartseq3_nac_offlist/counts_unfiltered_umi/cells_x_tcc.mtx</pre>
+
+### Format reads for processing via STAR
+
+Note: Please install splitcode (version 0.30.0) to preprocess this data - https://github.com/pachterlab/splitcode
 
 Now, let's look at NK cells vs. CD14 monocytes. First let's get their barcodes:
 
