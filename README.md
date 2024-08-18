@@ -2,6 +2,8 @@
 
 Code for reproducing the figures and results in the preprint [Accurate quantification of single-nucleus and single-cell RNA-seq transcripts](https://www.biorxiv.org/content/10.1101/2022.12.02.518832v2) by Kristján Eldjárn Hjörleifsson, Delaney Sullivan, Nikhila Swarna, Guillaume Holley, Páll Melsted and Lior Pachter
 
+(Note: In this repo, D-list is often referred to as "offlist".)
+
 ## Note about human reference genome
 
 The human reference genome (FASTA+GTF) used in all analyses is available directly at https://github.com/pachterlab/HSSHMP_2024/releases under the filename **human_CR_3.0.0.tar.gz**.
