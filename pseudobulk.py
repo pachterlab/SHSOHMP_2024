@@ -13,15 +13,14 @@ pseudobulked_data = matrix.sum(axis=0)
 # Convert the summed data to a 2D array (1 row x number of genes)
 pseudobulked_data_2d = np.array(pseudobulked_data).reshape(-1, 1)
 
-# Write the pseudobulked data to a new MatrixMarket file
-output_file = sys.argv[2]  # Replace with your desired output file path
-# scipy.io.mmwrite(output_file, pseudobulked_data_2d)
+output_file = sys.argv[2]
 
-# print(f'Pseudobulked data written to {output_file}')
-
+if output_file.endswith(".mtx"):
+  scipy.io.mmwrite(output_file, pseudobulked_data_2d)
+  print(f'Pseudobulked data written to {output_file}')
+  sys.exit(0)
 
 pseudobulked_data_dense = pseudobulked_data_2d.astype(int)
-
 df = pd.DataFrame(pseudobulked_data_dense)
 
 # Write the pseudobulked data to a CSV file
