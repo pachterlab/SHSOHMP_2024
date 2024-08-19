@@ -692,24 +692,28 @@ Run EM algorithm on pseudobulk:
     -g STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/g \
     -e smartseq3/smartseq3_nac_offlist/counts_unfiltered_umi/cells_x_tcc.ec.txt \
     smartseq3/smartseq3_nac_offlist/counts_unfiltered_umi/cells_x_tcc.CD14_monocytes.pseudobulk.mtx
+
     
 $kallisto quant-tcc -o smartseq3/smartseq3_nac_offlist/quant_pseudobulk_NK_cells/ \
     -t 24 --matrix-to-files --plaintext \
     -i STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/index.idx \
     -g STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/g \
     -e smartseq3/smartseq3_nac_offlist/counts_unfiltered_umi/cells_x_tcc.ec.txt \
-    smartseq3/smartseq3_nac_offlist/counts_unfiltered_umi/cells_x_tcc.NK_cells.pseudobulk.mtx</pre>
-
-TODO:
+    smartseq3/smartseq3_nac_offlist/counts_unfiltered_umi/cells_x_tcc.NK_cells.pseudobulk.mtx
+</pre>
 
 
 Prepare priors:
 
-<pre> </pre>
+<pre>cat smartseq3/smartseq3_nac_offlist/quant_pseudobulk_NK_cells/abundance_1.tsv|tail -n+2|cut -f4 > smartseq3/smartseq3_nac_offlist/quant_pseudobulk_NK_cells/prior.tsv
+cat smartseq3/smartseq3_nac_offlist/quant_pseudobulk_CD14_monocytes/abundance_1.tsv|tail -n+2|cut -f4 > smartseq3/smartseq3_nac_offlist/quant_pseudobulk_CD14_monocytes/prior.tsv</pre>
 
-Run EM algorithm with priors:
+Run EM algorithm with priors (note: need updated version of kallisto for this):
 
-<pre>$kallisto quant-tcc -o smartseq3/smartseq3_nac_offlist/quant_unfiltered_priors_NK_cells/ -t 24 --priors= --matrix-to-files --plaintext -i STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/index.idx -g STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/g -e smartseq3/smartseq3_nac_offlist/counts_unfiltered_umi/cells_x_tcc.ec.txt smartseq3/smartseq3_nac_offlist/counts_unfiltered_umi/cells_x_tcc.mtx</pre>
+<pre>$kallisto quant-tcc -o smartseq3/smartseq3_nac_offlist/quant_unfiltered_priors_NK_cells/ -t 24 --priors=smartseq3/smartseq3_nac_offlist/quant_pseudobulk_NK_cells/prior.tsv --matrix-to-files --plaintext -i STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/index.idx -g STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/g -e smartseq3/smartseq3_nac_offlist/counts_unfiltered_umi/cells_x_tcc.ec.txt smartseq3/smartseq3_nac_offlist/counts_unfiltered_umi/cells_x_tcc.NK_cells.mtx
+
+$kallisto quant-tcc -o smartseq3/smartseq3_nac_offlist/quant_unfiltered_priors_CD14_monocytes/ -t 24 --priors=smartseq3/smartseq3_nac_offlist/quant_pseudobulk_CD14_monocytes/prior.tsv --matrix-to-files --plaintext -i STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/index.idx -g STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/g -e smartseq3/smartseq3_nac_offlist/counts_unfiltered_umi/cells_x_tcc.ec.txt smartseq3/smartseq3_nac_offlist/counts_unfiltered_umi/cells_x_tcc.CD14_monocytes.mtx
+</pre>
 
 
 ### Format reads for STAR alignment
