@@ -678,6 +678,12 @@ python subset_matrix.py \
     smartseq3/smartseq3_nac_offlist/counts_unfiltered_umi/cells_x_tcc.NK_cells.mtx
 </pre>
 
+Pseudobulk the subsetted matrices:
+
+<pre>python pseudobulk.py smartseq3/smartseq3_nac_offlist/counts_unfiltered_umi/cells_x_tcc.NK_cells.mtx smartseq3/smartseq3_nac_offlist/counts_unfiltered_umi/cells_x_tcc.NK_cells.pseudobulk.mtx matrix
+python pseudobulk.py smartseq3/smartseq3_nac_offlist/counts_unfiltered_umi/cells_x_tcc.CD14_monocytes.mtx smartseq3/smartseq3_nac_offlist/counts_unfiltered_umi/cells_x_tcc.CD14_monocytes.pseudobulk.mtx matrix
+</pre>
+
 Run EM algorithm on pseudobulk:
 
 <pre>$kallisto quant-tcc -o smartseq3/smartseq3_nac_offlist/quant_pseudobulk_CD14_monocytes/ \
@@ -687,7 +693,7 @@ Run EM algorithm on pseudobulk:
     -e smartseq3/smartseq3_nac_offlist/counts_unfiltered_umi/cells_x_tcc.ec.txt \
     smartseq3/smartseq3_nac_offlist/counts_unfiltered_umi/cells_x_tcc.CD14_monocytes.mtx
     
-    $kallisto quant-tcc -o smartseq3/smartseq3_nac_offlist/quant_pseudobulk_NK_cells/ \
+$kallisto quant-tcc -o smartseq3/smartseq3_nac_offlist/quant_pseudobulk_NK_cells/ \
     -t 24 --matrix-to-files --plaintext \
     -i STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/index.idx \
     -g STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/g \
