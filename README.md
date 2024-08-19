@@ -680,8 +680,8 @@ python subset_matrix.py \
 
 Pseudobulk the subsetted matrices:
 
-<pre>python pseudobulk.py smartseq3/smartseq3_nac_offlist/counts_unfiltered_umi/cells_x_tcc.NK_cells.mtx smartseq3/smartseq3_nac_offlist/counts_unfiltered_umi/cells_x_tcc.NK_cells.pseudobulk.mtx matrix
-python pseudobulk.py smartseq3/smartseq3_nac_offlist/counts_unfiltered_umi/cells_x_tcc.CD14_monocytes.mtx smartseq3/smartseq3_nac_offlist/counts_unfiltered_umi/cells_x_tcc.CD14_monocytes.pseudobulk.mtx matrix
+<pre>python pseudobulk.py smartseq3/smartseq3_nac_offlist/counts_unfiltered_umi/cells_x_tcc.NK_cells.mtx smartseq3/smartseq3_nac_offlist/counts_unfiltered_umi/cells_x_tcc.NK_cells.pseudobulk.mtx
+python pseudobulk.py smartseq3/smartseq3_nac_offlist/counts_unfiltered_umi/cells_x_tcc.CD14_monocytes.mtx smartseq3/smartseq3_nac_offlist/counts_unfiltered_umi/cells_x_tcc.CD14_monocytes.pseudobulk.mtx
 </pre>
 
 Run EM algorithm on pseudobulk:
