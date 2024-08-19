@@ -691,14 +691,14 @@ Run EM algorithm on pseudobulk:
     -i STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/index.idx \
     -g STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/g \
     -e smartseq3/smartseq3_nac_offlist/counts_unfiltered_umi/cells_x_tcc.ec.txt \
-    smartseq3/smartseq3_nac_offlist/counts_unfiltered_umi/cells_x_tcc.CD14_monocytes.mtx
+    smartseq3/smartseq3_nac_offlist/counts_unfiltered_umi/cells_x_tcc.CD14_monocytes.pseudobulk.mtx
     
 $kallisto quant-tcc -o smartseq3/smartseq3_nac_offlist/quant_pseudobulk_NK_cells/ \
     -t 24 --matrix-to-files --plaintext \
     -i STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/index.idx \
     -g STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/g \
     -e smartseq3/smartseq3_nac_offlist/counts_unfiltered_umi/cells_x_tcc.ec.txt \
-    smartseq3/smartseq3_nac_offlist/counts_unfiltered_umi/cells_x_tcc.NK_cells.mtx</pre>
+    smartseq3/smartseq3_nac_offlist/counts_unfiltered_umi/cells_x_tcc.NK_cells.pseudobulk.mtx</pre>
 
 TODO:
 
