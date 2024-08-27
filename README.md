@@ -707,4 +707,194 @@ STARsoloManuscript/exe/STAR_2.7.9a \
 
 The resulting Aligned.sortedByCoord.out.bam in the two output directories can be inspected on a genome browser such as IGV after indexing with samtools.
 
+# PBMC samples re-reprocessing (for TCCs)
+
+### Obtain data
+
+Get clusters 1 and 2:
+
+<pre>wget --continue https://cf.10xgenomics.com/samples/cell-exp/6.1.0/20k_PBMC_3p_HT_nextgem_Chromium_X/20k_PBMC_3p_HT_nextgem_Chromium_X_analysis.tar.gz
+tar -xzvf 20k_PBMC_3p_HT_nextgem_Chromium_X_analysis.tar.gz
+cat analysis/clustering/graphclust/clusters.csv|grep ",1$\|,2$"|cut -d"-" -f1 > barcodes_10x_human.txt
+cat analysis/clustering/graphclust/clusters.csv|grep ",1$\|,2$"|tr '-' '\t' > barcodes_10x_human.clusters.txt
+</pre>
+
+### Process using kallisto
+
+Process:
+
+<pre>kb count --kallisto STARsoloManuscript/exe/kallisto_0.50.1 --bustools STARsoloManuscript/exe/bustools_0.43.2 -t 20 -x 10XV3 \
+    --workflow nac --sum=total -i STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/index.idx \
+    -g STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/g \
+    -c1 STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/c1 \
+    -c2 STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/c2 \
+    -o ./reprocess_human_20k_PBMC/ --overwrite --verbose \
+    -w barcodes_10x_human.txt -t 48 \
+    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L001_R1_001.fastq.gz \
+    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L001_R2_001.fastq.gz \
+    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L002_R1_001.fastq.gz \
+    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L002_R2_001.fastq.gz \
+    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L003_R1_001.fastq.gz \
+    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L003_R2_001.fastq.gz \
+    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L004_R1_001.fastq.gz \
+    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L004_R2_001.fastq.gz
+</pre>
+
+
+Obtain TCCs:
+
+<pre>STARsoloManuscript/exe/bustools_0.43.2 count -o ./reprocess_human_20k_PBMC/counts_unfiltered/cells_x_tcc -g STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/g -e ./reprocess_human_20k_PBMC/matrix.ec -t ./reprocess_human_20k_PBMC/transcripts.txt --umi-gene ./reprocess_human_20k_PBMC/output.unfiltered.bus
+</pre>
+
+
+<pre>STARsoloManuscript/exe/kallisto_0.50.1 quant-tcc -o reprocess_human_20k_PBMC/quant_unfiltered/ -t 48 --matrix-to-files --plaintext -i STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/index.idx -g STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/g -e reprocess_human_20k_PBMC/counts_unfiltered/cells_x_tcc.ec.txt reprocess_human_20k_PBMC/counts_unfiltered/cells_x_tcc.mtx</pre>
+
+### Format reads for STAR alignment
+
+Note: Please install splitcode (version 0.30.0) to preprocess this data - https://github.com/pachterlab/splitcode
+
+Now, let's look at cluster 1 vs. cluster 2. First let's get their barcodes:
+
+<pre>cat analysis/clustering/graphclust/clusters.csv|grep ",1$"|cut -d"-" -f1 > barcodes_10x_human.cluster1.txt
+cat analysis/clustering/graphclust/clusters.csv|grep ",2$"|cut -d"-" -f1 > barcodes_10x_human.cluster2.txt</pre>
+
+Now, let's run splitcode twice to extract the reads specific to cluster 1 cells and the reads specific to cluster 2 cells (note: with the proper config file, splitcode could, in theory, do this in one step rather than two).
+
+<pre>splitcode -t 16 -c 10x_pbmc_splitcode_config_cluster1_cells.txt --nFastqs=2 --gzip --x-only \
+    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L001_R1_001.fastq.gz \
+    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L001_R2_001.fastq.gz \
+    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L002_R1_001.fastq.gz \
+    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L002_R2_001.fastq.gz \
+    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L003_R1_001.fastq.gz \
+    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L003_R2_001.fastq.gz \
+    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L004_R1_001.fastq.gz \
+    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L004_R2_001.fastq.gz
+
+splitcode -t 16 -c 10x_pbmc_splitcode_config_cluster2_cells.txt --nFastqs=2 --gzip --x-only \
+    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L001_R1_001.fastq.gz \
+    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L001_R2_001.fastq.gz \
+    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L002_R1_001.fastq.gz \
+    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L002_R2_001.fastq.gz \
+    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L003_R1_001.fastq.gz \
+    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L003_R2_001.fastq.gz \
+    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L004_R1_001.fastq.gz \
+    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L004_R2_001.fastq.gz
+</pre>
+
+### Perform STAR alignment
+
+<pre>mkdir -p 10x_pbmc_star_cluster_1
+STARsoloManuscript/exe/STAR_2.7.9a \
+--genomeDir "STARsoloManuscript/genomes/index/STAR_2.7.9a/human_CR_3.0.0/fullSA" \
+--runThreadN 16 \
+--readFilesCommand zcat \
+--outSAMtype BAM SortedByCoordinate \
+--outFilterType BySJout \
+--outFileNamePrefix "10x_pbmc_star_cluster_1/" \
+--readFilesIn "10x_cluster1_cells_R2.fastq.gz"
+
+mkdir -p 10x_pbmc_star_cluster_2
+STARsoloManuscript/exe/STAR_2.7.9a \
+--genomeDir "STARsoloManuscript/genomes/index/STAR_2.7.9a/human_CR_3.0.0/fullSA" \
+--runThreadN 16 \
+--readFilesCommand zcat \
+--outSAMtype BAM SortedByCoordinate \
+--outFilterType BySJout \
+--outFileNamePrefix "10x_pbmc_star_cluster_2/" \
+--readFilesIn "10x_cluster2_cells_R2.fastq.gz"</pre>
+
+The resulting Aligned.sortedByCoord.out.bam in the two output directories can be inspected on a genome browser such as IGV after indexing with samtools.
+
+
+
+# SPLiT-seq c2c12 for TCCs
+
+## Download sequencing reads
+
+<pre>wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR139/065/SRR13948565/SRR13948565_1.fastq.gz
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR139/065/SRR13948565/SRR13948565_2.fastq.gz
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR139/066/SRR13948566/SRR13948566_1.fastq.gz
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR139/066/SRR13948566/SRR13948566_2.fastq.gz
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR139/071/SRR13948571/SRR13948571_1.fastq.gz
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR139/071/SRR13948571/SRR13948571_2.fastq.gz
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR139/068/SRR13948568/SRR13948568_1.fastq.gz
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR139/068/SRR13948568/SRR13948568_2.fastq.gz
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR139/069/SRR13948569/SRR13948569_1.fastq.gz
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR139/069/SRR13948569/SRR13948569_2.fastq.gz
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR139/070/SRR13948570/SRR13948570_1.fastq.gz
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR139/070/SRR13948570/SRR13948570_2.fastq.gz
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR139/067/SRR13948567/SRR13948567_1.fastq.gz
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR139/067/SRR13948567/SRR13948567_2.fastq.gz</pre>
+
+## Download metadata
+
+<pre>wget https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM5169nnn/GSM5169184/suppl/GSM5169184%5FC2C12%5Fshort%5F1k%5Fcell%5Fmetadata.csv.gz
+wget https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM5169nnn/GSM5169185/suppl/GSM5169185%5FC2C12%5Fshort%5F9kA%5Fcell%5Fmetadata.csv.gz
+wget https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM5169nnn/GSM5169186/suppl/GSM5169186%5FC2C12%5Fshort%5F9kB%5Fcell%5Fmetadata.csv.gz
+wget https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM5169nnn/GSM5169187/suppl/GSM5169187%5FC2C12%5Fshort%5F9kC%5Fcell%5Fmetadata.csv.gz
+wget https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM5169nnn/GSM5169188/suppl/GSM5169188%5FC2C12%5Fshort%5F9kD%5Fcell%5Fmetadata.csv.gz
+wget https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM5169nnn/GSM5169189/suppl/GSM5169189%5FC2C12%5Fshort%5F9kE%5Fcell%5Fmetadata.csv.gz
+wget https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM5169nnn/GSM5169190/suppl/GSM5169190%5FC2C12%5Fshort%5F9kF%5Fcell%5Fmetadata.csv.gz
+wget https://raw.githubusercontent.com/pachterlab/splitcode-tutorial/main/uploads/splitseq/r2_r3.txt
+wget https://raw.githubusercontent.com/fairliereese/LR-splitpipe/859279ed3fec859248fb4fdaee17280e6103b9f9/barcodes/bc_data_v2.csv</pre>
+
+## Format metadata
+
+<pre>cat bc_data_v2.csv|grep "A1\|A2\|A3\|A4\|A5\|A6\|A7\|A8\|A9\|A10\|A11\|A12"|grep R$|cut -d, -f2 > r1_R_Awells.txt
+cat bc_data_v2.csv|grep "A1\|A2\|A3\|A4\|A5\|A6\|A7\|A8\|A9\|A10\|A11\|A12"|grep T$|cut -d, -f2 > r1_T_Awells.txt</pre>
+
+## Format sequencing reads
+
+<pre>rm splitseq_batch.txt
+./prep_splitseq.sh SRR13948565 GSM5169184_C2C12_short_1k
+./prep_splitseq.sh SRR13948566 GSM5169185_C2C12_short_9kA
+./prep_splitseq.sh SRR13948567 GSM5169186_C2C12_short_9kB
+./prep_splitseq.sh SRR13948568 GSM5169187_C2C12_short_9kC
+./prep_splitseq.sh SRR13948569 GSM5169188_C2C12_short_9kD
+./prep_splitseq.sh SRR13948570 GSM5169189_C2C12_short_9kE
+./prep_splitseq.sh SRR13948571 GSM5169190_C2C12_short_9kF</pre>
+
+
+## Get TCCs with kallisto
+
+<pre>rm -rf splitseq_out
+
+kb count --strand=forward -w None --overwrite --keep-tmp --verbose \
+--workflow=nac -i STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/index.idx -g STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/g -c1 STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/c1 \
+-c2 STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/c2 -x 1,10,18,1,48,56,1,78,86:1,0,10:0,0,0 \
+--sum=total -o splitseq_out --batch-barcodes splitseq_batch.txt
+
+STARsoloManuscript/exe/bustools_0.43.2 count -o splitseq_out/counts_unfiltered/cells_x_tcc -g STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/g -e splitseq_out/matrix.ec -t splitseq_out/transcripts.txt --multimapping --umi-gene splitseq_out/tmp/output.s.bus
+
+STARsoloManuscript/exe/kallisto_0.50.1 quant-tcc -o splitseq_out/quant_unfiltered/ -t 24 --matrix-to-files --plaintext -i STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/index.idx -g STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/g -e splitseq_out/counts_unfiltered/cells_x_tcc.ec.txt splitseq_out/counts_unfiltered/cells_x_tcc.mtx</pre>
+
+## Get STAR alignment
+
+<pre>zcat splitseq_R_SRR13948565_R1.fastq.gz splitseq_R_SRR13948566_R1.fastq.gz splitseq_R_SRR13948567_R1.fastq.gz splitseq_R_SRR13948568_R1.fastq.gz splitseq_R_SRR13948569_R1.fastq.gz splitseq_R_SRR13948570_R1.fastq.gz splitseq_R_SRR13948571_R1.fastq.gz | gzip > splitseq_R_merged.fastq.gz
+zcat splitseq_T_SRR13948565_R1.fastq.gz splitseq_T_SRR13948566_R1.fastq.gz splitseq_T_SRR13948567_R1.fastq.gz splitseq_T_SRR13948568_R1.fastq.gz splitseq_T_SRR13948569_R1.fastq.gz splitseq_T_SRR13948570_R1.fastq.gz splitseq_T_SRR13948571_R1.fastq.gz | gzip > splitseq_T_merged.fastq.gz
+
+
+mkdir -p splitseq_c2c12_R
+STARsoloManuscript/exe/STAR_2.7.9a \
+--genomeDir "STARsoloManuscript/genomes/index/STAR_2.7.9a/mouse/fullSA" \
+--runThreadN 16 \
+--readFilesCommand zcat \
+--outSAMtype BAM SortedByCoordinate \
+--outFilterType BySJout \
+--outFileNamePrefix "splitseq_c2c12_R/" \
+--readFilesIn splitseq_R_merged.fastq.gz
+
+
+mkdir -p splitseq_c2c12_T
+STARsoloManuscript/exe/STAR_2.7.9a \
+--genomeDir "STARsoloManuscript/genomes/index/STAR_2.7.9a/mouse/fullSA" \
+--runThreadN 16 \
+--readFilesCommand zcat \
+--outSAMtype BAM SortedByCoordinate \
+--outFilterType BySJout \
+--outFileNamePrefix "splitseq_c2c12_T/" \
+--readFilesIn splitseq_T_merged.fastq.gz</pre>
+
+
+
 
