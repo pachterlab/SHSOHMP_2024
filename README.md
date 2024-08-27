@@ -900,8 +900,8 @@ STARsoloManuscript/exe/kallisto_0.50.1 quant-tcc -o splitseq_out/quant_unfiltere
 
 ## Get STAR alignment
 
-<pre>zcat splitseq_R_SRR13948565_R1.fastq.gz splitseq_R_SRR13948566_R1.fastq.gz splitseq_R_SRR13948567_R1.fastq.gz splitseq_R_SRR13948568_R1.fastq.gz splitseq_R_SRR13948569_R1.fastq.gz splitseq_R_SRR13948570_R1.fastq.gz splitseq_R_SRR13948571_R1.fastq.gz | gzip > splitseq_R_merged.fastq.gz
-zcat splitseq_T_SRR13948565_R1.fastq.gz splitseq_T_SRR13948566_R1.fastq.gz splitseq_T_SRR13948567_R1.fastq.gz splitseq_T_SRR13948568_R1.fastq.gz splitseq_T_SRR13948569_R1.fastq.gz splitseq_T_SRR13948570_R1.fastq.gz splitseq_T_SRR13948571_R1.fastq.gz | gzip > splitseq_T_merged.fastq.gz
+<pre>zcat splitseq_R_SRR13948565_R1.fastq.gz.filtered.fastq.gz splitseq_R_SRR13948566_R1.fastq.gz.filtered.fastq.gz splitseq_R_SRR13948567_R1.fastq.gz.filtered.fastq.gz splitseq_R_SRR13948568_R1.fastq.gz.filtered.fastq.gz splitseq_R_SRR13948569_R1.fastq.gz.filtered.fastq.gz splitseq_R_SRR13948570_R1.fastq.gz.filtered.fastq.gz splitseq_R_SRR13948571_R1.fastq.gz.filtered.fastq.gz | gzip > splitseq_R_merged.fastq.gz
+zcat splitseq_T_SRR13948565_R1.fastq.gz.filtered.fastq.gz splitseq_T_SRR13948566_R1.fastq.gz.filtered.fastq.gz splitseq_T_SRR13948567_R1.fastq.gz.filtered.fastq.gz splitseq_T_SRR13948568_R1.fastq.gz.filtered.fastq.gz splitseq_T_SRR13948569_R1.fastq.gz.filtered.fastq.gz splitseq_T_SRR13948570_R1.fastq.gz.filtered.fastq.gz splitseq_T_SRR13948571_R1.fastq.gz.filtered.fastq.gz | gzip > splitseq_T_merged.fastq.gz
 
 
 mkdir -p splitseq_c2c12_R
