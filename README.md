@@ -892,7 +892,7 @@ grep -j 20 -v -n \
 kb count --strand=forward -w None --overwrite --keep-tmp --verbose \
 --workflow=nac -i STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/index.idx -g STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/g -c1 STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/c1 \
 -c2 STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/c2 -x 1,10,18,1,48,56,1,78,86:1,0,10:0,0,0 \
---sum=total -o splitseq_out --batch-barcodes splitseq_batch.txt
+--sum=total -o splitseq_out --batch-barcodes splitseq_batch_final.txt
 
 STARsoloManuscript/exe/bustools_0.43.2 count -o splitseq_out/counts_unfiltered/cells_x_tcc -g STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/g -e splitseq_out/matrix.ec -t splitseq_out/transcripts.txt --multimapping --umi-gene splitseq_out/tmp/output.s.bus
 
