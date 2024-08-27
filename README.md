@@ -854,6 +854,36 @@ cat bc_data_v2.csv|grep "A1\|A2\|A3\|A4\|A5\|A6\|A7\|A8\|A9\|A10\|A11\|A12"|grep
 ./prep_splitseq.sh SRR13948570 GSM5169189_C2C12_short_9kE
 ./prep_splitseq.sh SRR13948571 GSM5169190_C2C12_short_9kF</pre>
 
+## Discard rRNA reads
+
+Need bowtie2 (version 2.5.3), seqkit (v2.8.0), samtools (version 1.19.2)
+
+<pre>bowtie2-build "mm10_ncRNA.fa" "exclusion_index"
+cat splitseq_batch.txt|cut -d' ' -f2 > splitseq_batch.r1.txt
+cat splitseq_batch.txt|cut -d' ' -f3 > splitseq_batch.r2.txt
+
+xargs -I {} sh -c 'bowtie2 -q -p 20 \
+--no-unal \
+--quiet \
+--local \
+-x "exclusion_index" \
+-U "{}" | samtools view -S | cut -f1 > "{}.filter.txt"' < splitseq_batch.r1.txt
+</pre>
+
+<pre>cat *.filter.txt > final.filter.txt
+
+xargs -I {} sh -c 'seqkit \
+grep -j 20 -v -n \
+-f "final.filter.txt" "{}" \
+-o "{}.filtered.fastq.gz"' < splitseq_batch.r1.txt
+
+xargs -I {} sh -c 'seqkit \
+grep -j 20 -v -n \
+-f "final.filter.txt" "{}" \
+-o "{}.filtered.fastq.gz"' < splitseq_batch.r2.txt</pre>
+
+<pre>cat splitseq_batch.txt | sed 's/\.fastq\.gz/.fastq.gz.filtered.fastq.gz/g' > splitseq_batch_final.txt</pre>
+</pre>
 
 ## Get TCCs with kallisto
 
