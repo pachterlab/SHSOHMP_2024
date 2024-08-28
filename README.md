@@ -708,6 +708,8 @@ STARsoloManuscript/exe/bustools_0.43.2 count -o splitseq_out/counts_unfiltered/c
 
 STARsoloManuscript/exe/kallisto_0.50.1 quant-tcc -o splitseq_out/quant_unfiltered/ -t 24 --matrix-to-files --plaintext -i STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/index.idx -g STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/g -e splitseq_out/counts_unfiltered/cells_x_tcc.ec.txt splitseq_out/counts_unfiltered/cells_x_tcc.mtx</pre>
 
+Now, look in the splitseq_analysis.ipynb notebook for further analysis.
+
 ## Get STAR alignment
 
 <pre>zcat splitseq_R_SRR13948565_R1.fastq.gz.filtered.fastq.gz splitseq_R_SRR13948566_R1.fastq.gz.filtered.fastq.gz splitseq_R_SRR13948567_R1.fastq.gz.filtered.fastq.gz splitseq_R_SRR13948568_R1.fastq.gz.filtered.fastq.gz splitseq_R_SRR13948569_R1.fastq.gz.filtered.fastq.gz splitseq_R_SRR13948570_R1.fastq.gz.filtered.fastq.gz splitseq_R_SRR13948571_R1.fastq.gz.filtered.fastq.gz | gzip > splitseq_R_merged.fastq.gz
@@ -736,5 +738,5 @@ STARsoloManuscript/exe/STAR_2.7.9a \
 --readFilesIn splitseq_T_merged.fastq.gz</pre>
 
 
-
+We can index the BAM files with samtools then view them in IGV.
 
