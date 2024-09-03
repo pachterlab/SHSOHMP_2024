@@ -617,9 +617,9 @@ cmd2=" -x 10XV3 --strand=unstranded \
 $cmd1 16 $cmd2
 </pre>
 
-# SPLiT-seq c2c12 for TCCs
+## SPLiT-seq c2c12 for TCCs
 
-## Download sequencing reads
+### Download sequencing reads
 
 <pre>wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR139/065/SRR13948565/SRR13948565_1.fastq.gz
 wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR139/065/SRR13948565/SRR13948565_2.fastq.gz
@@ -636,7 +636,7 @@ wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR139/070/SRR13948570/SRR13948570_2.fas
 wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR139/067/SRR13948567/SRR13948567_1.fastq.gz
 wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR139/067/SRR13948567/SRR13948567_2.fastq.gz</pre>
 
-## Download metadata
+### Download metadata
 
 <pre>wget https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM5169nnn/GSM5169184/suppl/GSM5169184%5FC2C12%5Fshort%5F1k%5Fcell%5Fmetadata.csv.gz
 wget https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM5169nnn/GSM5169185/suppl/GSM5169185%5FC2C12%5Fshort%5F9kA%5Fcell%5Fmetadata.csv.gz
@@ -648,12 +648,12 @@ wget https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM5169nnn/GSM5169190/suppl/GSM516
 wget https://raw.githubusercontent.com/pachterlab/splitcode-tutorial/main/uploads/splitseq/r2_r3.txt
 wget https://raw.githubusercontent.com/fairliereese/LR-splitpipe/859279ed3fec859248fb4fdaee17280e6103b9f9/barcodes/bc_data_v2.csv</pre>
 
-## Format metadata
+### Format metadata
 
 <pre>cat bc_data_v2.csv|grep "A1\|A2\|A3\|A4\|A5\|A6\|A7\|A8\|A9\|A10\|A11\|A12"|grep R$|cut -d, -f2 > r1_R_Awells.txt
 cat bc_data_v2.csv|grep "A1\|A2\|A3\|A4\|A5\|A6\|A7\|A8\|A9\|A10\|A11\|A12"|grep T$|cut -d, -f2 > r1_T_Awells.txt</pre>
 
-## Format sequencing reads
+### Format sequencing reads
 
 <pre>rm splitseq_batch.txt
 ./prep_splitseq.sh SRR13948565 GSM5169184_C2C12_short_1k
@@ -664,7 +664,7 @@ cat bc_data_v2.csv|grep "A1\|A2\|A3\|A4\|A5\|A6\|A7\|A8\|A9\|A10\|A11\|A12"|grep
 ./prep_splitseq.sh SRR13948570 GSM5169189_C2C12_short_9kE
 ./prep_splitseq.sh SRR13948571 GSM5169190_C2C12_short_9kF</pre>
 
-## Discard rRNA reads
+### Discard rRNA reads
 
 Need bowtie2 (version 2.5.3), seqkit (v2.8.0), samtools (version 1.19.2)
 
@@ -695,7 +695,7 @@ grep -j 20 -v -n \
 <pre>cat splitseq_batch.txt | sed 's/\.fastq\.gz/.fastq.gz.filtered.fastq.gz/g' > splitseq_batch_final.txt</pre>
 </pre>
 
-## Get TCCs with kallisto
+### Get TCCs with kallisto
 
 <pre>rm -rf splitseq_out
 
@@ -710,7 +710,7 @@ STARsoloManuscript/exe/kallisto_0.50.1 quant-tcc -o splitseq_out/quant_unfiltere
 
 Now, look in the splitseq_analysis.ipynb notebook for further analysis.
 
-## Get STAR alignment
+### Get STAR alignment
 
 <pre>zcat splitseq_R_SRR13948565_R1.fastq.gz.filtered.fastq.gz splitseq_R_SRR13948566_R1.fastq.gz.filtered.fastq.gz splitseq_R_SRR13948567_R1.fastq.gz.filtered.fastq.gz splitseq_R_SRR13948568_R1.fastq.gz.filtered.fastq.gz splitseq_R_SRR13948569_R1.fastq.gz.filtered.fastq.gz splitseq_R_SRR13948570_R1.fastq.gz.filtered.fastq.gz splitseq_R_SRR13948571_R1.fastq.gz.filtered.fastq.gz | gzip > splitseq_R_merged.fastq.gz
 zcat splitseq_T_SRR13948565_R1.fastq.gz.filtered.fastq.gz splitseq_T_SRR13948566_R1.fastq.gz.filtered.fastq.gz splitseq_T_SRR13948567_R1.fastq.gz.filtered.fastq.gz splitseq_T_SRR13948568_R1.fastq.gz.filtered.fastq.gz splitseq_T_SRR13948569_R1.fastq.gz.filtered.fastq.gz splitseq_T_SRR13948570_R1.fastq.gz.filtered.fastq.gz splitseq_T_SRR13948571_R1.fastq.gz.filtered.fastq.gz | gzip > splitseq_T_merged.fastq.gz
@@ -739,4 +739,9 @@ STARsoloManuscript/exe/STAR_2.7.9a \
 
 
 We can index the BAM files with samtools then view them in IGV.
+
+
+## RSEM analysis
+
+Simply go to kallisto_paper_analysis and follow the instructions there.
 
