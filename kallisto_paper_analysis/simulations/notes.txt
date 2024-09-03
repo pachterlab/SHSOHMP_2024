@@ -1,0 +1,67 @@
+# First, change base_path in ../config.py
+
+# This pipeline assumes an existing conda installation and is written as a Snakemake workflow. To install Snakemake with conda, run:
+conda env create -f envs/snakemake.yaml
+conda activate snakemake
+
+conda env create -f envs/kallistoanalysis.yaml
+conda activate kallistoanalysis
+
+# Now do the following (build some stuff in the base path and create a subsetted FASTA with 25% [15151] of the original transcriptome FASTA genes):
+cd ..
+snakemake -j 16 -p
+awk '$3 == "gene" { for(i=1;i<=NF;i++) if($i ~ /gene_id/) { gsub(/"|;|gene_id/, "", $(i+1)); print $(i+1) } }'  annotation/Homo_sapiens.GRCh38.80.gtf|sort -u > annotation/gene_list.txt
+python select_random_lines.py annotation/gene_list.txt annotation/selected_genes_1.txt 15151 42
+grep -f annotation/selected_genes_1.txt annotation/Homo_sapiens.GRCh38.80.gtf|awk '$0 ~ /transcript_id/ { match($0, /transcript_id "([^"]+)"/, arr); print arr[1] }'|sort -u > annotation/selected_transcripts_1.txt
+python select_fasta_by_headers.py ./annotation/Homo_sapiens.GRCh38.80.fa ./annotation/selected_transcripts_1.txt > ./annotation/Homo_sapiens.GRCh38.80.fa_
+cd simulations
+
+# Replace the following with path to STARsoloManuscript
+main_path="/home/dsullivan/smartseq3/STARsoloManuscript"
+
+# Copy the human genome over
+
+cp ${main_path}/genomes/human_CR_3.0.0/genome.fa ./
+
+# Set up path to kallisto
+mkdir -p bin
+ln -s ${main_path}/exe/kallisto_0.50.1 $(pwd)/bin/kallisto
+export PATH=$(pwd)/bin:$PATH
+
+# Install rsem from source (bioconda's rsem doesn't simulate reads properly)
+wget https://github.com/deweylab/RSEM/archive/refs/tags/v1.3.3.tar.gz
+tar -xzvf v1.3.3.tar.gz
+cd RSEM-1.3.3
+make
+export PATH=$(pwd):$PATH
+
+# mkdir -p ../annotation
+# ln -s ${main_path}/genomes/human_CR_3.0.0/annotations.gtf $(pwd)/../annotation/Homo_sapiens.GRCh38.80.gtf
+
+snakemake -j 16 -p
+
+# When running snakemake on multiple threads, the gzip step to compress .fq files in NA12716_7/rsem/sim/30000000 might be unsuccessful; in which case, run the snakemake again on a single thread to complete the unsuccessful parts and/or manually gzip any remaining uncompressed .fq files in that directory
+
+# Then make a copy of the following (optional):
+
+cp -R NA12716_7 NA12716_7_backup
+
+# Now, rename kallisto to kallisto_no_dlist
+
+directory="NA12716_7/rsem/sim/30000000/"
+find "$directory" -type d -name "kallisto" -execdir mv {} kallisto_no_dlist \;
+
+# And move out the original kallisto index
+
+mv ../index/Homo_sapiens.GRCh38.80.kidx ../index/Homo_sapiens.GRCh38.80.kidx_no_dlist
+
+# Now, run the second Snakemake file (which does the D-list indexing)
+
+snakemake -s Snakefile2 -j 16 -p
+
+# Finally, get the resulting performance metrics
+
+python stats.py kallisto_no_dlist
+python stats.py kallisto
+
+# Can repeat multiple times for replicates
