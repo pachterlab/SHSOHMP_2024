@@ -692,7 +692,7 @@ grep -f gene_subset_list.randomized.txt STARsoloManuscript/genomes/human_CR_3.0.
     STARsoloManuscript/genomes/human_CR_3.0.0/genome.fa subset.gtf</pre>
 
 
-<pre>kb ref -t 16 --workflow=nac -g t2g.standard.subset.txt --verbose \
+<pre>kb ref -t 16 --workflow=standard -g t2g.standard.subset.txt --verbose \
     -f1 f1.standard.subset.txt -i standard.subset.idx  \
     STARsoloManuscript/genomes/human_CR_3.0.0/genome.fa subset.gtf</pre>
 
