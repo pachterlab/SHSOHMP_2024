@@ -669,6 +669,23 @@ cat analysis/clustering/graphclust/clusters.csv|grep ",1$\|,2$"|tr '-' '\t' > ba
     20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L004_R2_001.fastq.gz
 </pre>
 
+#### Subset index
+
+<pre>awk '$3 == "gene" { for(i=1;i<=NF;i++) if($i ~ /gene_id/) { gsub(/"|;|gene_id/, "", $(i+1)); print $(i+1) } }'  STARsoloManuscript/genomes/human_CR_3.0.0/annotations.gtf|sort -u > gene_subset_list.txt
+python kallisto_paper_analysis/select_random_lines.py gene_subset_list.txt gene_subset_list.randomized.txt 8385 42
+grep -f gene_subset_list.randomized.txt STARsoloManuscript/genomes/human_CR_3.0.0/annotations.gtf|awk '$0 ~ /gene_id/ { match($0, /gene_id "([^"]+)"/, arr); print; }' > subset.gtf</pre>
+
+<pre>kb ref -t 16 --workflow=nac --d-list=None -g t2g.subset.no_offlist.txt --verbose \
+    -f1 f1.subset.no_offlist.txt -f2 f2.subset.no_offlist.txt \
+    -c1 c1.subset.no_offlist.txt -c2 c2.subset.no_offlist.txt -i subset.no_offlist.idx  \
+    STARsoloManuscript/genomes/human_CR_3.0.0/genome.fa subset.gtf</pre>
+
+
+<pre>kb ref -t 16 --workflow=nac -g t2g.subset.txt --verbose \
+    -f1 f1.subset.txt -f2 f2.subset.txt \
+    -c1 c1.subset.txt -c2 c2.subset.txt -i subset.idx  \
+    STARsoloManuscript/genomes/human_CR_3.0.0/genome.fa subset.gtf</pre>
+
 
 #### Obtain TCCs (OPTIONAL; NOT USED):
 
