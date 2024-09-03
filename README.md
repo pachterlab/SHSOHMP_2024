@@ -687,6 +687,16 @@ grep -f gene_subset_list.randomized.txt STARsoloManuscript/genomes/human_CR_3.0.
     STARsoloManuscript/genomes/human_CR_3.0.0/genome.fa subset.gtf</pre>
 
 
+<pre>kb ref -t 16 --workflow=standard --d-list=None -g t2g.standard.subset.no_offlist.txt --verbose \
+    -f1 f1.standard.subset.no_offlist.txt -i standard.subset.no_offlist.idx  \
+    STARsoloManuscript/genomes/human_CR_3.0.0/genome.fa subset.gtf</pre>
+
+
+<pre>kb ref -t 16 --workflow=nac -g t2g.standard.subset.txt --verbose \
+    -f1 f1.standard.subset.txt -i standard.subset.idx  \
+    STARsoloManuscript/genomes/human_CR_3.0.0/genome.fa subset.gtf</pre>
+
+
 #### Obtain TCCs (OPTIONAL; NOT USED):
 
 <pre>STARsoloManuscript/exe/bustools_0.43.2 count -o ./reprocess_human_20k_PBMC/counts_unfiltered/cells_x_tcc -g STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/g -e ./reprocess_human_20k_PBMC/matrix.ec -t ./reprocess_human_20k_PBMC/transcripts.txt --umi-gene ./reprocess_human_20k_PBMC/output.unfiltered.bus
