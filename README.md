@@ -625,23 +625,20 @@ Get clusters 1 and 2:
 
 <pre>wget --continue https://cf.10xgenomics.com/samples/cell-exp/6.1.0/20k_PBMC_3p_HT_nextgem_Chromium_X/20k_PBMC_3p_HT_nextgem_Chromium_X_analysis.tar.gz
 tar -xzvf 20k_PBMC_3p_HT_nextgem_Chromium_X_analysis.tar.gz
-cat analysis/clustering/graphclust/clusters.csv|grep ",1$\|,2$"|cut -d"-" -f1 > barcodes_10x_human.txt
-cat analysis/clustering/graphclust/clusters.csv|grep ",1$\|,2$"|tr '-' '\t' > barcodes_10x_human.clusters.txt
-cat analysis/clustering/graphclust/clusters.csv|grep ",1$"|cut -d"-" -f1 > barcodes_10x_human.cluster.1.txt
-cat analysis/clustering/graphclust/clusters.csv|grep ",2$"|cut -d"-" -f1 > barcodes_10x_human.cluster.2.txt
+cat analysis/clustering/graphclust/clusters.csv|cut -d"-" -f1 > barcodes_10x_human_all.txt
 </pre>
 
 ### Process using kallisto
 
 #### NAC plus offlist
 
-<pre>kb count --kallisto STARsoloManuscript/exe/kallisto_0.50.1 --bustools STARsoloManuscript/exe/bustools_0.43.2 -t 20 -x 10XV3 \
+<pre>kb count --kallisto STARsoloManuscript/exe/kallisto_0.50.1 --bustools STARsoloManuscript/exe/bustools_0.43.2 -t 48 -x 10XV3 \
     --workflow nac --sum=total -i STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/index.idx \
     -g STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/g \
     -c1 STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/c1 \
     -c2 STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/c2 \
     -o ./reprocess_human_20k_PBMC/ --overwrite --verbose \
-    -w barcodes_10x_human.txt -t 48 \
+    -w barcodes_10x_human_all.txt -t 48 \
     20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L001_R1_001.fastq.gz \
     20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L001_R2_001.fastq.gz \
     20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L002_R1_001.fastq.gz \
@@ -654,78 +651,13 @@ cat analysis/clustering/graphclust/clusters.csv|grep ",2$"|cut -d"-" -f1 > barco
 
 #### NAC no offlist
 
-<pre>kb count --kallisto STARsoloManuscript/exe/kallisto_0.50.1 --bustools STARsoloManuscript/exe/bustools_0.43.2 -t 20 -x 10XV3 \
+<pre>kb count --kallisto STARsoloManuscript/exe/kallisto_0.50.1 --bustools STARsoloManuscript/exe/bustools_0.43.2 -t 48 -x 10XV3 \
     --workflow nac --sum=total -i STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_1/index.idx \
     -g STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_1/g \
     -c1 STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_1/c1 \
     -c2 STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_1/c2 \
     -o ./reprocess_human_20k_PBMC_no_offlist/ --overwrite --verbose \
-    -w barcodes_10x_human.txt -t 48 \
-    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L001_R1_001.fastq.gz \
-    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L001_R2_001.fastq.gz \
-    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L002_R1_001.fastq.gz \
-    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L002_R2_001.fastq.gz \
-    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L003_R1_001.fastq.gz \
-    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L003_R2_001.fastq.gz \
-    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L004_R1_001.fastq.gz \
-    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L004_R2_001.fastq.gz
-</pre>
-
-#### Subset index
-
-<pre>awk '$3 == "gene" { for(i=1;i<=NF;i++) if($i ~ /gene_id/) { gsub(/"|;|gene_id/, "", $(i+1)); print $(i+1) } }'  STARsoloManuscript/genomes/human_CR_3.0.0/annotations.gtf|sort -u > gene_subset_list.txt
-python kallisto_paper_analysis/select_random_lines.py gene_subset_list.txt gene_subset_list.randomized.txt 8385 42
-grep -f gene_subset_list.randomized.txt STARsoloManuscript/genomes/human_CR_3.0.0/annotations.gtf|awk '$0 ~ /gene_id/ { match($0, /gene_id "([^"]+)"/, arr); print; }' > subset.gtf</pre>
-
-<pre>kb ref -t 16 --workflow=nac --d-list=None -g t2g.subset.no_offlist.txt --verbose \
-    -f1 f1.subset.no_offlist.txt -f2 f2.subset.no_offlist.txt \
-    -c1 c1.subset.no_offlist.txt -c2 c2.subset.no_offlist.txt -i subset.no_offlist.idx  \
-    STARsoloManuscript/genomes/human_CR_3.0.0/genome.fa subset.gtf</pre>
-
-
-<pre>kb ref -t 16 --workflow=nac -g t2g.subset.txt --verbose \
-    -f1 f1.subset.txt -f2 f2.subset.txt \
-    -c1 c1.subset.txt -c2 c2.subset.txt -i subset.idx  \
-    STARsoloManuscript/genomes/human_CR_3.0.0/genome.fa subset.gtf</pre>
-
-
-<pre>kb ref -t 16 --workflow=standard --d-list=None -g t2g.standard.subset.no_offlist.txt --verbose \
-    -f1 f1.standard.subset.no_offlist.txt -i standard.subset.no_offlist.idx  \
-    STARsoloManuscript/genomes/human_CR_3.0.0/genome.fa subset.gtf</pre>
-
-
-<pre>kb ref -t 16 --workflow=standard -g t2g.standard.subset.txt --verbose \
-    -f1 f1.standard.subset.txt -i standard.subset.idx  \
-    STARsoloManuscript/genomes/human_CR_3.0.0/genome.fa subset.gtf</pre>
-
-#### NAC plus offlist (subset)
-
-<pre>kb count --kallisto STARsoloManuscript/exe/kallisto_0.50.1 --bustools STARsoloManuscript/exe/bustools_0.43.2 -t 20 -x 10XV3 \
-    --workflow nac --sum=total -i subset.idx \
-    -g t2g.subset.txt \
-    -c1 c1.subset.txt \
-    -c2 c2.subset.txt \
-    -o ./reprocess_human_20k_PBMC_subset/ --overwrite --verbose \
-    -w barcodes_10x_human.txt -t 48 \
-    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L001_R1_001.fastq.gz \
-    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L001_R2_001.fastq.gz \
-    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L002_R1_001.fastq.gz \
-    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L002_R2_001.fastq.gz \
-    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L003_R1_001.fastq.gz \
-    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L003_R2_001.fastq.gz \
-    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L004_R1_001.fastq.gz \
-    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L004_R2_001.fastq.gz
-</pre>
-
-#### NAC no offlist (subset)
-
-<pre>kb count --kallisto STARsoloManuscript/exe/kallisto_0.50.1 --bustools STARsoloManuscript/exe/bustools_0.43.2 -t 20 -x 10XV3 \
-    --workflow nac --sum=total -i subset.no_offlist.idx \
-    -g t2g.subset.no_offlist.txt \
-    -c1 c1.subset.no_offlist.txt \
-    -c2 c2.subset.no_offlist.txt \
-    -o ./reprocess_human_20k_PBMC_no_offlist_subset/ --overwrite --verbose \
-    -w barcodes_10x_human.txt -t 48 \
+    -w barcodes_10x_human_all.txt \
     20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L001_R1_001.fastq.gz \
     20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L001_R2_001.fastq.gz \
     20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L002_R1_001.fastq.gz \
@@ -737,13 +669,13 @@ grep -f gene_subset_list.randomized.txt STARsoloManuscript/genomes/human_CR_3.0.
 </pre>
 
 
-#### standard plus offlist (subset)
+#### standard plus offlist
 
-<pre>kb count --kallisto STARsoloManuscript/exe/kallisto_0.50.1 --bustools STARsoloManuscript/exe/bustools_0.43.2 -t 20 -x 10XV3 \
-    --workflow standard -i standard.subset.idx \
-    -g t2g.standard.subset.txt \
-    -o ./reprocess_human_20k_PBMC_standard_subset/ --overwrite --verbose \
-    -w barcodes_10x_human.txt -t 48 \
+<pre>kb count --kallisto STARsoloManuscript/exe/kallisto_0.50.1 --bustools STARsoloManuscript/exe/bustools_0.43.2 -t 48 -x 10XV3 \
+    -i STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/standard_offlist_1/index.idx \
+    -g STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/standard_offlist_1/g \
+    -o ./reprocess_human_20k_PBMC_standard/ --overwrite --verbose \
+    -w barcodes_10x_human_all.txt \
     20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L001_R1_001.fastq.gz \
     20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L001_R2_001.fastq.gz \
     20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L002_R1_001.fastq.gz \
@@ -754,52 +686,13 @@ grep -f gene_subset_list.randomized.txt STARsoloManuscript/genomes/human_CR_3.0.
     20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L004_R2_001.fastq.gz
 </pre>
 
-#### standard no offlist (subset)
+#### standard no offlist
 
-<pre>kb count --kallisto STARsoloManuscript/exe/kallisto_0.50.1 --bustools STARsoloManuscript/exe/bustools_0.43.2 -t 20 -x 10XV3 \
-    --workflow standard -i standard.subset.no_offlist.idx \
-    -g t2g.standard.subset.no_offlist.txt \
-    -o ./reprocess_human_20k_PBMC_no_offlist_standard_subset/ --overwrite --verbose \
-    -w barcodes_10x_human.txt -t 48 \
-    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L001_R1_001.fastq.gz \
-    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L001_R2_001.fastq.gz \
-    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L002_R1_001.fastq.gz \
-    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L002_R2_001.fastq.gz \
-    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L003_R1_001.fastq.gz \
-    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L003_R2_001.fastq.gz \
-    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L004_R1_001.fastq.gz \
-    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L004_R2_001.fastq.gz
-</pre>
-
-
-#### Obtain TCCs (OPTIONAL; NOT USED):
-
-<pre>STARsoloManuscript/exe/bustools_0.43.2 count -o ./reprocess_human_20k_PBMC/counts_unfiltered/cells_x_tcc -g STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/g -e ./reprocess_human_20k_PBMC/matrix.ec -t ./reprocess_human_20k_PBMC/transcripts.txt --umi-gene ./reprocess_human_20k_PBMC/output.unfiltered.bus
-</pre>
-
-
-### Format reads for STAR alignment
-
-Note: Please install splitcode (version 0.30.0) to preprocess this data - https://github.com/pachterlab/splitcode
-
-Now, let's look at cluster 1 vs. cluster 2. First let's get their barcodes:
-
-<pre>cat analysis/clustering/graphclust/clusters.csv|grep ",1$"|cut -d"-" -f1 > barcodes_10x_human.cluster1.txt
-cat analysis/clustering/graphclust/clusters.csv|grep ",2$"|cut -d"-" -f1 > barcodes_10x_human.cluster2.txt</pre>
-
-Now, let's run splitcode twice to extract the reads specific to cluster 1 cells and the reads specific to cluster 2 cells (note: with the proper config file, splitcode could, in theory, do this in one step rather than two).
-
-<pre>splitcode -t 16 -c 10x_pbmc_splitcode_config_cluster1_cells.txt --nFastqs=2 --gzip --x-only \
-    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L001_R1_001.fastq.gz \
-    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L001_R2_001.fastq.gz \
-    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L002_R1_001.fastq.gz \
-    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L002_R2_001.fastq.gz \
-    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L003_R1_001.fastq.gz \
-    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L003_R2_001.fastq.gz \
-    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L004_R1_001.fastq.gz \
-    20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L004_R2_001.fastq.gz
-
-splitcode -t 16 -c 10x_pbmc_splitcode_config_cluster2_cells.txt --nFastqs=2 --gzip --x-only \
+<pre>kb count --kallisto STARsoloManuscript/exe/kallisto_0.50.1 --bustools STARsoloManuscript/exe/bustools_0.43.2 -t 48 -x 10XV3 \
+    -i STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/standard_1/index.idx \
+    -g STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/standard_1/g \
+    -o ./reprocess_human_20k_PBMC_standard_no_offlist/ --overwrite --verbose \
+    -w barcodes_10x_human_all.txt \
     20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L001_R1_001.fastq.gz \
     20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L001_R2_001.fastq.gz \
     20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L002_R1_001.fastq.gz \
