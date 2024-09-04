@@ -650,7 +650,7 @@ cat analysis/clustering/graphclust/clusters.csv|grep ",1$\|,2$"|tr '-' '\t' > ba
     20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L004_R2_001.fastq.gz
 </pre>
 
-#### NAC no offlist (OPTIONAL; NOT USED)
+#### NAC no offlist
 
 <pre>kb count --kallisto STARsoloManuscript/exe/kallisto_0.50.1 --bustools STARsoloManuscript/exe/bustools_0.43.2 -t 20 -x 10XV3 \
     --workflow nac --sum=total -i STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_1/index.idx \
