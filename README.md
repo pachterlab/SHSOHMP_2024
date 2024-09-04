@@ -627,6 +627,8 @@ Get clusters 1 and 2:
 tar -xzvf 20k_PBMC_3p_HT_nextgem_Chromium_X_analysis.tar.gz
 cat analysis/clustering/graphclust/clusters.csv|grep ",1$\|,2$"|cut -d"-" -f1 > barcodes_10x_human.txt
 cat analysis/clustering/graphclust/clusters.csv|grep ",1$\|,2$"|tr '-' '\t' > barcodes_10x_human.clusters.txt
+cat analysis/clustering/graphclust/clusters.csv|grep ",1$"|tr '-' '\t' > barcodes_10x_human.cluster.1.txt
+cat analysis/clustering/graphclust/clusters.csv|grep ",2$"|tr '-' '\t' > barcodes_10x_human.cluster.2.txt
 </pre>
 
 ### Process using kallisto
