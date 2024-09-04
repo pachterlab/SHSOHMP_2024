@@ -827,6 +827,49 @@ STARsoloManuscript/exe/STAR_2.7.9a \
 
 We can index the BAM files with samtools then view them in IGV.
 
+### Get R versus T count matrices
+
+<pre>cp -R splitseq_out splitseq_out_R
+cp -R splitseq_out splitseq_out_T
+
+grep -E "$(sed 's/$/\$/' r1_R_Awells.txt | paste -sd '|' -)" splitseq_out_R/counts_unfiltered/cells_x_genes.barcodes.txt > R_barcodes_selected.txt
+grep -E "$(sed 's/$/\$/' r1_T_Awells.txt | paste -sd '|' -)" splitseq_out_T/counts_unfiltered/cells_x_genes.barcodes.txt > T_barcodes_selected.txt
+
+# Note: the matrix subsetting will collapse subpools
+    
+type="R"
+mtx="total"
+python subset_matrix.py splitseq_out_${type}/counts_unfiltered/cells_x_genes.${mtx}.mtx ${type}_barcodes_selected.txt splitseq_out_${type}/counts_unfiltered/cells_x_genes.barcodes.txt output.mtx && mv output.mtx splitseq_out_${type}/counts_unfiltered/cells_x_genes.${mtx}.mtx
+mtx="nascent"
+python subset_matrix.py splitseq_out_${type}/counts_unfiltered/cells_x_genes.${mtx}.mtx ${type}_barcodes_selected.txt splitseq_out_${type}/counts_unfiltered/cells_x_genes.barcodes.txt output.mtx && mv output.mtx splitseq_out_${type}/counts_unfiltered/cells_x_genes.${mtx}.mtx
+mtx="mature"
+python subset_matrix.py splitseq_out_${type}/counts_unfiltered/cells_x_genes.${mtx}.mtx ${type}_barcodes_selected.txt splitseq_out_${type}/counts_unfiltered/cells_x_genes.barcodes.txt output.mtx && mv output.mtx splitseq_out_${type}/counts_unfiltered/cells_x_genes.${mtx}.mtx
+mtx="ambiguous"
+python subset_matrix.py splitseq_out_${type}/counts_unfiltered/cells_x_genes.${mtx}.mtx ${type}_barcodes_selected.txt splitseq_out_${type}/counts_unfiltered/cells_x_genes.barcodes.txt output.mtx && mv output.mtx splitseq_out_${type}/counts_unfiltered/cells_x_genes.${mtx}.mtx
+mtx="cell"
+python subset_matrix.py splitseq_out_${type}/counts_unfiltered/cells_x_genes.${mtx}.mtx ${type}_barcodes_selected.txt splitseq_out_${type}/counts_unfiltered/cells_x_genes.barcodes.txt output.mtx && mv output.mtx splitseq_out_${type}/counts_unfiltered/cells_x_genes.${mtx}.mtx
+mtx="nucleus"
+python subset_matrix.py splitseq_out_${type}/counts_unfiltered/cells_x_genes.${mtx}.mtx ${type}_barcodes_selected.txt splitseq_out_${type}/counts_unfiltered/cells_x_genes.barcodes.txt output.mtx && mv output.mtx splitseq_out_${type}/counts_unfiltered/cells_x_genes.${mtx}.mtx
+type="T"
+mtx="total"
+python subset_matrix.py splitseq_out_${type}/counts_unfiltered/cells_x_genes.${mtx}.mtx ${type}_barcodes_selected.txt splitseq_out_${type}/counts_unfiltered/cells_x_genes.barcodes.txt output.mtx && mv output.mtx splitseq_out_${type}/counts_unfiltered/cells_x_genes.${mtx}.mtx
+mtx="nascent"
+python subset_matrix.py splitseq_out_${type}/counts_unfiltered/cells_x_genes.${mtx}.mtx ${type}_barcodes_selected.txt splitseq_out_${type}/counts_unfiltered/cells_x_genes.barcodes.txt output.mtx && mv output.mtx splitseq_out_${type}/counts_unfiltered/cells_x_genes.${mtx}.mtx
+mtx="mature"
+python subset_matrix.py splitseq_out_${type}/counts_unfiltered/cells_x_genes.${mtx}.mtx ${type}_barcodes_selected.txt splitseq_out_${type}/counts_unfiltered/cells_x_genes.barcodes.txt output.mtx && mv output.mtx splitseq_out_${type}/counts_unfiltered/cells_x_genes.${mtx}.mtx
+mtx="ambiguous"
+python subset_matrix.py splitseq_out_${type}/counts_unfiltered/cells_x_genes.${mtx}.mtx ${type}_barcodes_selected.txt splitseq_out_${type}/counts_unfiltered/cells_x_genes.barcodes.txt output.mtx && mv output.mtx splitseq_out_${type}/counts_unfiltered/cells_x_genes.${mtx}.mtx
+mtx="cell"
+python subset_matrix.py splitseq_out_${type}/counts_unfiltered/cells_x_genes.${mtx}.mtx ${type}_barcodes_selected.txt splitseq_out_${type}/counts_unfiltered/cells_x_genes.barcodes.txt output.mtx && mv output.mtx splitseq_out_${type}/counts_unfiltered/cells_x_genes.${mtx}.mtx
+mtx="nucleus"
+python subset_matrix.py splitseq_out_${type}/counts_unfiltered/cells_x_genes.${mtx}.mtx ${type}_barcodes_selected.txt splitseq_out_${type}/counts_unfiltered/cells_x_genes.barcodes.txt output.mtx && mv output.mtx splitseq_out_${type}/counts_unfiltered/cells_x_genes.${mtx}.mtx
+
+mv splitseq_out_R/counts_unfiltered splitseq_out_R/counts_filtered
+mv splitseq_out_T/counts_unfiltered splitseq_out_T/counts_filtered
+
+./mtx_comparisons.sh splitseq_out_R
+./mtx_comparisons.sh splitseq_out_T
+</pre>
 
 ## RSEM analysis
 
