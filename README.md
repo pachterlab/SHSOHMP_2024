@@ -625,7 +625,7 @@ Get clusters 1 and 2:
 
 <pre>wget --continue https://cf.10xgenomics.com/samples/cell-exp/6.1.0/20k_PBMC_3p_HT_nextgem_Chromium_X/20k_PBMC_3p_HT_nextgem_Chromium_X_analysis.tar.gz
 tar -xzvf 20k_PBMC_3p_HT_nextgem_Chromium_X_analysis.tar.gz
-cat analysis/clustering/graphclust/clusters.csv|cut -d"-" -f1 > barcodes_10x_human_all.txt
+cat analysis/clustering/graphclust/clusters.csv|cut -d"-" -f1|tail -n+2 > barcodes_10x_human_all.txt
 </pre>
 
 ### Process using kallisto
