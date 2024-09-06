@@ -832,3 +832,7 @@ We can index the BAM files with samtools then view them in IGV.
 
 Simply go to kallisto_paper_analysis and follow the instructions there.
 
+## Clustering analysis
+
+Simply go to clustering_analysis to obtain the pipeline for generating comparisons between count matrices (PCA, UMAP, marker genes, alluvial plots, etc.)
+

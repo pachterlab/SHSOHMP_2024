@@ -1,0 +1,66 @@
+# Function argument and input settings
+analysis_methods: "default" # str["default", "seurat_like", "scanpy_like"]
+data_input: "default" # str["default", "seurat", "scanpy"]
+save_data: TRUE
+
+# Input and output path specifications
+project_base_path: "/workspace/HSSHMP-revision"  # also used for locating script files; "/workspace/analysis" for docker image with repository mounted in /workspace; "/content/scrnaseq_packages_and_versioning/analysis" for Google Colab
+data_name: "reprocess_human_20k_PBMC_standard"  # str name of folder with data
+data_path_root: ''
+scanpy_version: "1_9_5"  # str (with _ in place of .)
+conda_env: "analysis_env"
+scan1_name: 'offlist'
+scan2_name: 'no_offlist'
+mat_name: ''
+d_list_comp: TRUE
+
+scan1_cell_fraction_after_downsampling: "1_0" # fraction of cells after downsampling - any number from (0,1.0] (with _ in place of .)   # also used for performing cell downsampling
+scan1_read_fraction_after_downsampling: "1_0" # fraction of reads after downsampling - any number from (0,1.0] (with _ in place of .)
+scan1_read_downsample_seed: 0 # random seqtk seed for downsampling reads - 0 for no downsampling, integer >1 for downsampled seed
+scan1_cell_downsample_seed: 0 # Sets the global R session seed during cell downsampling (does not affect the rest of the global R session)
+
+scan2_cell_fraction_after_downsampling: "1_0" # fraction of cells after downsampling - any number from (0,1.0] (with _ in place of .)   # also used for performing cell downsampling
+scan2_read_fraction_after_downsampling: "1_0" # fraction of reads after downsampling - any number from (0,1.0] (with _ in place of .)
+scan2_read_downsample_seed: 0 # random seqtk seed for downsampling reads - 0 for no downsampling, integer >1 for downsampled seed
+scan2_cell_downsample_seed: 0 # Sets the global R session seed during cell downsampling (does not affect the rest of the global R session)
+
+scan1_data_path: "" # "" for default - glue::glue("{project_base_path}/count_matrix_collection/{data_name}/{scan1_matrix_generation_method}{scan1_matrix_generation_method_version}/frac{scan1_read_fraction_after_downsampling}_seed{scan1_read_downsample_seed}")
+scan2_data_path: "" # "" for default - glue::glue("{project_base_path}/count_matrix_collection/{data_name}/{scan2_matrix_generation_method}{scan2_matrix_generation_method_version}/frac{scan2_read_fraction_after_downsampling}_seed{scan2_read_downsample_seed}")
+
+# Custom parameters
+scan1_inflection_UMI_manual: "" # number >=0; or "" to have automatic selection
+scan2_inflection_UMI_manual: "" # number >=0; or "" to have automatic selection
+
+scan1_min_cells: 3
+scan1_min_features: 200
+
+scan2_min_cells: 3
+scan2_min_features: 200
+
+scan1_max_n_genes_by_counts_scanpy: 12000 # default 2500
+scan2_max_n_genes_by_counts_scanpy: 12000 # default 2500
+max_pct_mct: 20 # default 5
+scan1_num_pcs: 50 # number 1-50; or NULL to select after elbow plot visualization
+scan2_num_pcs: 50
+umap_knn_k: 50
+umap_leiden_clustering_resolution: 0.8
+
+pca_seed1: 42
+pca_seed2: 42
+use1_knn_custom_seed: FALSE
+use2_knn_custom_seed: FALSE
+knn_seed1: 0
+knn_seed2: 0
+clustering_seed1: 0
+clustering_seed2: 0
+umap_seed1: 42
+umap_seed2: 42
+umap_leiden_seed1: 42
+umap_leiden_seed2: 42
+umap_umap_seed1: 42
+umap_umap_seed2: 42
+
+dpi: 300
+
+# Output path
+output_base_path: "" # "" for default - glue::glue("{project_base_path}/output/{data_name}/{scan1_name}_vs_{scan2_name}/")
