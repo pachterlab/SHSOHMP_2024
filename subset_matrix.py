@@ -37,4 +37,3 @@ with open(sys.argv[4], 'w') as f:
     for i, j, v in zip(subset_matrix.row, subset_matrix.col, subset_matrix.data):
         f.write(f"{i + 1} {j + 1} {int(v)}\n")  # Cast values to integer to ensure correct format
 
-

@@ -1,0 +1,80 @@
+include: "config.py"
+
+
+rule all:
+    input:
+        expand("simulations/NA12716_7/NA12716_7_{end}.fastq.gz", end = [1,2]),
+        "annotation/Homo_sapiens.GRCh38.80.gtf",
+        "annotation/Homo_sapiens.GRCh38.80.fa",
+        "genome/Homo_sapiens.GRCh38.dna.primary_assembly.fa"
+
+
+
+rule bwt2_genome:
+    input:
+        GENOME_FA
+    output:
+        expand(GENOME_BWT + ".{i}.bt2", i = range(1, 5)),
+        expand(GENOME_BWT + ".rev.{i}.bt2", i = range(1, 3))
+    threads: 1
+    shell:
+        'bowtie2-build '
+        '--offrate 1 '
+        '--seed 37 '
+        '{input} {GENOME_BWT}'
+
+
+
+rule rsem_bwt2_idx:
+    input:
+        "{0}/ref.grp".format(ERCC_RSEM_DIR)
+    output:
+        "{0}/ref.transcripts.1.bt2".format(ERCC_RSEM_DIR),
+        "{0}/ref.transcripts.2.bt2".format(ERCC_RSEM_DIR),
+        "{0}/ref.transcripts.3.bt2".format(ERCC_RSEM_DIR),
+        "{0}/ref.transcripts.4.bt2".format(ERCC_RSEM_DIR),
+        "{0}/ref.transcripts.rev.1.bt2".format(ERCC_RSEM_DIR),
+        "{0}/ref.transcripts.rev.2.bt2".format(ERCC_RSEM_DIR)
+    shell:
+        'bowtie2-build '
+        '--seed 42 '
+        '--offrate 1 '
+        '{ERCC_RSEM_DIR}/ref.transcripts.fa '
+        '{ERCC_RSEM_DIR}/ref.transcripts'
+
+
+rule get_geuvadis:
+     output:
+        "simulations/NA12716_7/NA12716_7_{end}.fastq.gz"
+     shell:
+        "wget -O simulations/NA12716_7/NA12716_7_{wildcards.end}.fastq.gz ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR188/ERR188140/ERR188140_{wildcards.end}.fastq.gz; "
+        "ln -s simulations/NA12716_7/NA12716_7_{wildcards.end}.fastq.gz personalized_simulation/NA12716_7/NA12716_7_{wildcards.end}.fastq.gz"
+
+rule make_symlinks:
+     input:
+        "simulations/NA12716_7/NA12716_7_{end}.fastq.gz"
+     output:
+        "personalized_simulation/NA12716_7/NA12716_7_{end}.fastq.gz"
+     shell:
+        "ln -s ../../simulations/NA12716_7/NA12716_7_{wildcards.end}.fastq.gz personalized_simulation/NA12716_7/NA12716_7_{wildcards.end}.fastq.gz"
+
+rule get_genome:
+     output:
+        "genome/Homo_sapiens.GRCh38.dna.primary_assembly.fa"
+     shell:
+        "cd genome; "
+        "wget ftp://ftp.ensembl.org/pub/release-80/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz; "
+        "gunzip Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz"
+
+
+rule get_anno:
+     output:
+        "annotation/Homo_sapiens.GRCh38.80.gtf",
+        "annotation/Homo_sapiens.GRCh38.80.fa"
+     shell:
+        "cd annotation; "
+        "wget ftp://ftp.ensembl.org/pub/release-80/gtf/homo_sapiens/Homo_sapiens.GRCh38.80.gtf.gz; "
+        "zcat < Homo_sapiens.GRCh38.80.gtf.gz|grep -v ^CHR_ > Homo_sapiens.GRCh38.80.gtf; "
+        "gffread Homo_sapiens.GRCh38.80.gtf -g ../genome/Homo_sapiens.GRCh38.dna.primary_assembly.fa -w Homo_sapiens.GRCh38.80.fa; "
+
+

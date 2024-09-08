@@ -1,0 +1,13 @@
+{
+	"n_targets": 125138,
+	"n_bootstraps": 0,
+	"n_processed": 832193962,
+	"n_pseudoaligned": 791058212,
+	"n_unique": 177061250,
+	"p_pseudoaligned": 95.1,
+	"p_unique": 21.3,
+	"kallisto_version": "0.50.1",
+	"index_version": 13,
+	"start_time": "Mon Aug 12 11:34:46 2024",
+	"call": "/home/dsullivan/HSSHMP_2024/STARsoloManuscript/exe/kallisto_0.50.1 bus -i STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/standard_1/index.idx -o ./performance_comparisons/out/standard-mouse_ffpe/ -x 10XV3 -t 16 --unstranded CytAssist_11mm_FFPE_Mouse_Embryo_fastqs/CytAssist_11mm_FFPE_Mouse_Embryo_S1_L004_R1_001.fastq.gz CytAssist_11mm_FFPE_Mouse_Embryo_fastqs/CytAssist_11mm_FFPE_Mouse_Embryo_S1_L004_R2_001.fastq.gz"
+}

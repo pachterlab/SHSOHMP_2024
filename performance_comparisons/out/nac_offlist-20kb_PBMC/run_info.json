@@ -1,0 +1,13 @@
+{
+	"n_targets": 206450,
+	"n_bootstraps": 0,
+	"n_processed": 818107363,
+	"n_pseudoaligned": 626051867,
+	"n_unique": 214577476,
+	"p_pseudoaligned": 76.5,
+	"p_unique": 26.2,
+	"kallisto_version": "0.50.1",
+	"index_version": 13,
+	"start_time": "Thu Aug  8 13:32:05 2024",
+	"call": "/home/dsullivan/HSSHMP_2024/STARsoloManuscript/exe/kallisto_0.50.1 bus -i STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/nac_offlist_1/index.idx -o ./performance_comparisons/out/nac_offlist-20kb_PBMC/ -x 10XV3 -t 16 20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L001_R1_001.fastq.gz 20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L001_R2_001.fastq.gz 20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L002_R1_001.fastq.gz 20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L002_R2_001.fastq.gz 20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L003_R1_001.fastq.gz 20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L003_R2_001.fastq.gz 20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L004_R1_001.fastq.gz 20k_PBMC_3p_HT_nextgem_Chromium_X_fastqs/20k_PBMC_3p_HT_nextgem_Chromium_X_S3_L004_R2_001.fastq.gz"
+}

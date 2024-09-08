@@ -1,0 +1,13 @@
+{
+	"n_targets": 172912,
+	"n_bootstraps": 0,
+	"n_processed": 121378620,
+	"n_pseudoaligned": 47984199,
+	"n_unique": 32798387,
+	"p_pseudoaligned": 39.5,
+	"p_unique": 27.0,
+	"kallisto_version": "0.50.1",
+	"index_version": 13,
+	"start_time": "Thu Aug  8 13:46:55 2024",
+	"call": "/home/dsullivan/HSSHMP_2024/STARsoloManuscript/exe/kallisto_0.50.1 bus -i STARsoloManuscript/genomes/index/kallisto_0.50.1/human_CR_3.0.0/standard_1/index.idx -o ./performance_comparisons/out/standard-5kb_jejunum/ -x 10XV3 -t 16 5k_human_jejunum_CNIK_3pv3_fastqs/5k_human_jejunum_CNIK_3pv3_S1_L001_R1_001.fastq.gz 5k_human_jejunum_CNIK_3pv3_fastqs/5k_human_jejunum_CNIK_3pv3_S1_L001_R2_001.fastq.gz 5k_human_jejunum_CNIK_3pv3_fastqs/5k_human_jejunum_CNIK_3pv3_S1_L002_R1_001.fastq.gz 5k_human_jejunum_CNIK_3pv3_fastqs/5k_human_jejunum_CNIK_3pv3_S1_L002_R2_001.fastq.gz 5k_human_jejunum_CNIK_3pv3_fastqs/5k_human_jejunum_CNIK_3pv3_S1_L003_R1_001.fastq.gz 5k_human_jejunum_CNIK_3pv3_fastqs/5k_human_jejunum_CNIK_3pv3_S1_L003_R2_001.fastq.gz 5k_human_jejunum_CNIK_3pv3_fastqs/5k_human_jejunum_CNIK_3pv3_S1_L004_R1_001.fastq.gz 5k_human_jejunum_CNIK_3pv3_fastqs/5k_human_jejunum_CNIK_3pv3_S1_L004_R2_001.fastq.gz"
+}

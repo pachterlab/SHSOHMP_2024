@@ -1,0 +1,9 @@
+name: kallistoanalysis
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - bowtie2=2.5.3
+  - samtools=1.19.2
+  - gffread=0.12.7
+

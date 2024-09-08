@@ -1,0 +1,336 @@
+from collections import defaultdict
+import random
+
+include: "../config.py"
+
+HUMAN_PRE = "NA12716_7"
+
+# total number of simulations
+SIMS_LIST = [i for i in range(1, 21)]
+
+
+rule all:
+    input:
+        "{0}/rsem/out.isoforms.results".format( HUMAN_PRE ),
+        expand(HUMAN_PRE + "/rsem/sim/30000000/{sims}_1.fq.gz", sims = SIMS_LIST),
+        expand(HUMAN_PRE + "/rsem/sim/30000000/{sims}/rsem/out.isoforms.results", sims = SIMS_LIST),
+        expand(HUMAN_PRE + "/rsem/sim/30000000/{sims}/kallisto/abundance.tsv", sims = SIMS_LIST),
+        #expand(HUMAN_PRE + "/rsem/sim/30000000/{id}/bwt2_sens/bwt2_sens.txt", id = [2] )
+
+
+########################################################################
+# INDICES
+########################################################################
+
+rule make_anno_fa:
+     input:
+        '{prefix}.gtf'
+     output:
+        '{prefix}.fa'
+     shell:
+        "gffread {wildcards.prefix}.gtf -g {GENOME_FA} -w {wildcards.prefix}.fa"
+
+
+rule anno_bwt2_index:
+    input:
+        ANNO_FA
+    output:
+        ANNO_BWT + ".1.bt2",
+        ANNO_BWT + ".2.bt2",
+        ANNO_BWT + ".3.bt2",
+        ANNO_BWT + ".4.bt2",
+        ANNO_BWT + ".rev.1.bt2",
+        ANNO_BWT + ".rev.2.bt2"
+    shell:
+        "bowtie2-build "
+        "--seed 42 "
+        "--offrate 1 "
+        "{input} " +
+        ANNO_BWT
+
+
+rule genome_bwt2_index:
+    input:
+        GENOME_FA
+    output:
+        GENOME_BWT + ".1.bt2",
+        GENOME_BWT + ".2.bt2",
+        GENOME_BWT + ".3.bt2",
+        GENOME_BWT + ".4.bt2",
+        GENOME_BWT + ".rev.1.bt2",
+        GENOME_BWT + ".rev.2.bt2"
+    shell:
+        "bowtie2-build "
+        "--seed 42 "
+        "--offrate 1 "
+        "{input} " +
+        GENOME_BWT
+        
+
+# Prepare the main annotation to run RSEM on it
+rule rsem_prepare:
+    input:
+        ANNO_FA
+    output:
+        "{0}.grp".format( ANNO_RSEM )
+    run:
+        out_dir = '{0}/{1}_rsem'.format( IDX, ANNO_PREFIX )
+        shell('mkdir -p {0}'.format( out_dir ) )
+        shell('rsem-prepare-reference {0} {1}'.format( ANNO_FA, ANNO_RSEM ))
+
+
+
+rule kallisto_index:
+    input:
+        ANNO_FA
+    output:
+        KAL_IDX
+    threads: 1
+    shell:
+        KALLISTO + ' index '
+        '-i ' + KAL_IDX + ' ' +
+        ANNO_FA + '_'
+
+
+
+########################################################################
+# Real data to act as seed for simulation
+########################################################################
+
+# align for RSEM on "real" data
+rule rsem_align:
+    input:
+        "{sample}/{sample}_1.fastq.gz", 
+        "{sample}/{sample}_2.fastq.gz",
+        ANNO_BWT + ".1.bt2"
+    output:
+        "{sample}/alignments/{sample}_rsem.bam"
+    benchmark:
+        "benchmarks/rsem_align/{sample}.json"
+    threads:
+        N_THREADS
+    message:
+        'Running bowtie2 (thr = {threads}) on {input}'
+    shell:
+        'bowtie2 '
+        '--sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --score-min L,0,-0.1 '
+        '--no-mixed --no-discordant '
+        '--seed 42 '
+        '-k 200 '
+        '-x ' + ANNO_BWT + ' '
+        '-p {threads} '
+        '-1 {input[0]} '
+        '-2 {input[1]} | '
+        'samtools view -Sb - > {output}'
+
+
+# Run RSEM on a "real" sample
+rule rsem:
+    input:
+        "{sample}/alignments/{sample}_rsem.bam",
+        ANNO_RSEM + ".grp"
+    output:
+        "{sample}/rsem/out.isoforms.results"
+    benchmark:
+        "benchmarks/rsem/{sample}.json"
+    threads:
+        N_THREADS
+    run:
+        shell("mkdir -p {wildcards.sample}/rsem")
+        out_prefix = "{wildcards.sample}/rsem/out"
+        cmd = " ".join(["rsem-calculate-expression", "--bam", "--paired-end",
+            "--no-bam-output", "-p {threads}", "{input[0]}", ANNO_RSEM, out_prefix])
+        shell(cmd)
+
+
+########################################################################
+# Generate simulations
+########################################################################
+
+# simulate from RSEM using errors
+rule rsem_simulate:
+    input:
+        "{sample}/rsem/out.isoforms.results"
+    output:
+        "{sample}/rsem/sim/{n_reads,\d+}/{sim_num,\d+}_1.fq.gz",
+        "{sample}/rsem/sim/{n_reads,\d+}/{sim_num,\d+}_2.fq.gz"
+    threads: 1
+    run:
+        shell("mkdir -p {wildcards.sample}/rsem/sim/{wildcards.n_reads}")
+        res = "{wildcards.sample}/rsem/sim/{wildcards.n_reads}/{wildcards.sim_num}"
+        cmd = " ".join([
+            "rsem-simulate-reads",
+            ANNO_RSEM,
+            "{wildcards.sample}/rsem/out.stat/out.model",
+            "{wildcards.sample}/rsem/out.isoforms.results",
+            "0.0",
+            "{wildcards.n_reads}",
+            "{wildcards.sample}/rsem/sim/{wildcards.n_reads}/{wildcards.sim_num}",
+            "--seed", "{wildcards.sim_num}"
+            ])
+        shell(cmd)
+        shell("gzip -f {0}*.fq".format( res ))
+
+
+########################################################################
+# Alignments
+########################################################################
+
+
+# bwt2 alignments for RSEM
+rule bwt2_rsem_rsem_sim:
+    input:
+        "{sample}/rsem/sim/{nreads}/{sim_id}_1.fq.gz",
+        "{sample}/rsem/sim/{nreads}/{sim_id}_2.fq.gz"
+    output:
+        "{sample}/rsem/sim/{nreads}/{sim_id}/alignments/bwt2_rsem.bam"
+    benchmark:
+        "benchmarks/{sample}/rsem/sim/{nreads}/{sim_id}/bwt2_rsem.json"
+    threads: N_THREADS
+    message:
+        'Running bowtie2 (thr = {threads}) on {input}'
+    shell:
+        'bowtie2 '
+        '--sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --score-min L,0,-0.1 '
+        '--no-mixed --no-discordant '
+        '--seed 42 '
+        '-k 200 '
+        '-x ' + ANNO_BWT + ' '
+        '-p {threads} '
+        '-1 {input[0]} '
+        '-2 {input[1]} | '
+        'samtools view -Sb - > {output}'
+
+
+
+########################################################################
+# Quantify simulations
+########################################################################
+
+
+rule rsem_rsem_sim:
+    input:
+        rules.bwt2_rsem_rsem_sim.output
+    output:
+        "{sample}/rsem/sim/{nreads}/{sim_id}/rsem/out.isoforms.results"
+    benchmark:
+        "benchmarks/{sample}/rsem/sim/{nreads}/{sim_id}/rsem.json"
+    threads: N_THREADS
+    message:
+        "Executing RSEM with {input}"
+    run:
+        out_path = "{wildcards.sample}/rsem/sim/{wildcards.nreads}/{wildcards.sim_id}/rsem"
+        shell("mkdir -p " + out_path)
+        out_prefix = out_path + "/out"
+        cmd = " ".join(["rsem-calculate-expression", "--bam", "--paired-end",
+            "--no-bam-output", "-p {threads}", "{input}", ANNO_RSEM, out_prefix])
+        shell(cmd)
+
+
+
+# run kallisto on RSEM simulations
+rule kallisto_rsem_sim:
+    input:
+        "{sample}/rsem/sim/{nreads}/{sim_id}_1.fq.gz",
+        "{sample}/rsem/sim/{nreads}/{sim_id}_2.fq.gz",
+        KAL_IDX
+    output:
+        "{sample}/rsem/sim/{nreads}/{sim_id}/kallisto/abundance.tsv"
+    benchmark:
+        "benchmarks/{sample}/rsem/sim/{nreads}/{sim_id}/kallisto.json"
+    threads: 1
+    message:
+        "kallisto quant on {input[0]} {output}"
+    shell:
+        KALLISTO + " quant -i {KAL_IDX} "
+        "-o {wildcards.sample}/rsem/sim/{wildcards.nreads}"
+        "/{wildcards.sim_id}/kallisto {input[0]} {input[1]}"
+
+
+# Run kallisto on RSEM simulations
+rule kallisto_rsem_sim_bs:
+    input:
+        KALLISTO,
+        "{sample}/rsem/sim/{nreads}/{sim_id}_1.fq.gz",
+        "{sample}/rsem/sim/{nreads}/{sim_id}_2.fq.gz",
+        KAL_IDX
+    output:
+        "{sample}/rsem/sim/{nreads}/{sim_id}/kallisto_bs/abundance.h5"
+    benchmark:
+        "benchmarks/{sample}/rsem/sim/{nreads}/{sim_id}/kallisto_bs.json"
+    threads: 1
+    message:
+        "kallisto quant w/ bs on {input[0]} {output}"
+    shell:
+        "kallisto quant -i {KAL_IDX} "
+        "-o {wildcards.sample}/rsem/sim/{wildcards.nreads}"
+        "/{wildcards.sim_id}/kallisto_bs "
+        "-b 100 "
+        "{input[0]} {input[1]}"
+
+
+
+########################################################################
+# Dropping transcripts
+########################################################################
+
+# create new gtf by dropping transcripts
+rule drop_transcripts:
+     input:
+        ANNO_GTF
+     output:
+        "{sample}/rsem/sim/{nreads}/{sim_id}/dropped_transcripts/" + ANNO_PREFIX + "_dt.gtf"
+     run:
+        shell("mkdir -p {wildcards.sample}/rsem/sim/{wildcards.nreads}/{wildcards.sim_id}/dropped_transcripts")
+        # read in gtf
+        gtf = open(input[0]).readlines()
+        # get dict of gene=>transcript list
+        genes = defaultdict(set)
+        for line in gtf:
+            m = re.search('gene_id "([^"]*)"; .*transcript_id "([^"]*)";', line)
+            if m:
+               genes[m.group(1)].add(m.group(2))
+        # make a set of all potentially removable transcripts, excluding one transcript per gene
+        removable_trans = set()
+        for gene_id, trans_set in genes.items():
+            removable_trans |= set(random.sample(trans_set, len(trans_set) - 1))
+        # select those to remove
+        to_remove = set(random.sample(removable_trans, int(0.05*(len(removable_trans) + len(genes)))))
+
+        # go back through gtf and filter
+        out = open(output[0], "w")
+        for line in gtf:
+            m = re.search('transcript_id "([^"]*)";', line)
+            if not m or m.group(1) not in to_remove:
+               out.write(line)
+
+
+rule kallisto_dt_index:
+    input:
+        KALLISTO,
+        "{sample}/rsem/sim/{nreads}/{sim_id}/dropped_transcripts/" + ANNO_PREFIX + "_dt.fa"
+    output:
+        "{sample}/rsem/sim/{nreads}/{sim_id}/dropped_transcripts/" + ANNO_PREFIX + "_dt.kidx"
+    threads: 1
+    shell:
+        KALLISTO + ' index -i {output} {input}'
+
+
+# run kallisto
+rule run_kallisto_dt:
+     input:
+        KALLISTO,
+        "{sample}/rsem/sim/{nreads}/{sim_id}_1.fq.gz",
+        "{sample}/rsem/sim/{nreads}/{sim_id}_2.fq.gz",
+        "{sample}/rsem/sim/{nreads}/{sim_id}/dropped_transcripts/" + ANNO_PREFIX + "_dt.kidx"
+     output:
+        "{sample}/rsem/sim/{nreads}/{sim_id}/dropped_transcripts/kallisto/abundance.h5"
+     threads: 1
+     message:
+        "kallisto quant on {input[0]} {output}"
+     shell:
+        "{KALLISTO} quant -i {input[2]} "
+        "-o {wildcards.sample}/rsem/sim/{wildcards.nreads}"
+        "/{wildcards.sim_id}/dropped_transcripts/kallisto {input[0]} {input[1]}"
+
+
