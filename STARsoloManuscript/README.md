@@ -52,7 +52,7 @@ cd ..
 
 <pre>cd ..
 rm -rf STARsoloManuscript
-curl -s https://api.github.com/repos/pachterlab/HSSHMP_2024/releases/latest \
+curl -s https://api.github.com/repos/pachterlab/SHSOHMP_2024/releases/latest \
 | grep "browser_download_url" \
 | cut -d : -f 2,3 \
 | tr -d \" \
