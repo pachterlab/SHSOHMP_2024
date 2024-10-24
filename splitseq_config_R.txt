@@ -1,0 +1,5 @@
+@extract <barcodes_R{#*}>
+tags         distances  ids     groups    minFindsG  locations	subs
+r1_R_Awells.txt$    1          r1_R    round1    1          1,78,86	.
+r2_r3.txt$   1          r2      round2_3  2          1,48,56	.
+r2_r3.txt$   1          r3      round2_3  2          1,10,18	.
