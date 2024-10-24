@@ -797,6 +797,21 @@ STARsoloManuscript/exe/kallisto_0.50.1 quant-tcc -o splitseq_out/quant_unfiltere
 
 Now, look in the splitseq_analysis.ipynb notebook for further analysis.
 
+#### Supplement: Get transcript-level estimates (with converting R->T barcodes)
+
+<pre>rm -rf splitseq_out_supplement
+
+cat splitseq_batch_final.txt|cut -c3- > splitseq_batch_final.modified.txt
+awk 'NR==FNR{a[NR]=$0; next} {print a[FNR] " *" $0}' r1_R_Awells.txt r1_T_Awells.txt > replace.txt
+
+kb count --strand=forward -w None --overwrite --keep-tmp --verbose \
+--workflow=nac -i STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/index.idx -g STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/g -c1 STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/c1 \
+-c2 STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/c2 -x 1,10,18,1,48,56,1,78,86:1,0,10:0,0,0 \
+--sum=total -o splitseq_out_supplement -r replace.txt --batch-barcodes splitseq_batch_final.modified.txt
+
+</pre>
+
+
 ### Get STAR alignment
 
 <pre>zcat splitseq_R_SRR13948565_R1.fastq.gz.filtered.fastq.gz splitseq_R_SRR13948566_R1.fastq.gz.filtered.fastq.gz splitseq_R_SRR13948567_R1.fastq.gz.filtered.fastq.gz splitseq_R_SRR13948568_R1.fastq.gz.filtered.fastq.gz splitseq_R_SRR13948569_R1.fastq.gz.filtered.fastq.gz splitseq_R_SRR13948570_R1.fastq.gz.filtered.fastq.gz splitseq_R_SRR13948571_R1.fastq.gz.filtered.fastq.gz | gzip > splitseq_R_merged.fastq.gz
