@@ -809,6 +809,9 @@ kb count --strand=forward -w None --overwrite --keep-tmp --verbose \
 -c2 STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/c2 -x 1,10,18,1,48,56,1,78,86:1,0,10:0,0,0 \
 --sum=total -o splitseq_out_supplement -r replace.txt --batch-barcodes splitseq_batch_final.modified.txt
 
+STARsoloManuscript/exe/bustools_0.43.2 count -o splitseq_out_supplement/counts_unfiltered_modified/cells_x_tcc -g STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/g -e splitseq_out_supplement/matrix.ec -t splitseq_out_supplement/transcripts.txt --multimapping --umi-gene splitseq_out_supplement/output_modified.unfiltered.bus
+
+STARsoloManuscript/exe/kallisto_0.50.1 quant-tcc -o splitseq_out_supplement/quant_unfiltered/ -t 24 --matrix-to-files --plaintext -i STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/index.idx -g STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/g -e splitseq_out_supplement/counts_unfiltered_modified/cells_x_tcc.ec.txt splitseq_out_supplement/counts_unfiltered_modified/cells_x_tcc.mtx</pre>
 </pre>
 
 
