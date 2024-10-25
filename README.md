@@ -780,7 +780,6 @@ grep -j 20 -v -n \
 -o "{}.filtered.fastq.gz"' < splitseq_batch.r2.txt</pre>
 
 <pre>cat splitseq_batch.txt | sed 's/\.fastq\.gz/.fastq.gz.filtered.fastq.gz/g' > splitseq_batch_final.txt</pre>
-</pre>
 
 ### Get TCCs with kallisto
 
@@ -813,6 +812,8 @@ STARsoloManuscript/exe/bustools_0.43.2 count -o splitseq_out_supplement/counts_u
 
 STARsoloManuscript/exe/kallisto_0.50.1 quant-tcc -o splitseq_out_supplement/quant_unfiltered/ -t 24 --matrix-to-files --plaintext -i STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/index.idx -g STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/g -e splitseq_out_supplement/counts_unfiltered_modified/cells_x_tcc.ec.txt splitseq_out_supplement/counts_unfiltered_modified/cells_x_tcc.mtx</pre>
 </pre>
+
+See supp_quant.ipynb for plotting.
 
 
 ### Get STAR alignment
