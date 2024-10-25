@@ -793,7 +793,7 @@ kb count --strand=forward -w None --overwrite --keep-tmp --verbose \
 
 STARsoloManuscript/exe/bustools_0.43.2 count -o splitseq_out/counts_unfiltered/cells_x_tcc -g STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/g -e splitseq_out/matrix.ec -t splitseq_out/transcripts.txt --multimapping --umi-gene splitseq_out/tmp/output.s.bus
 
-STARsoloManuscript/exe/kallisto_0.50.1 quant-tcc -o splitseq_out/quant_unfiltered/ -t 24 --matrix-to-files --plaintext -i STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/index.idx -g STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/g -e splitseq_out/counts_unfiltered/cells_x_tcc.ec.txt splitseq_out/counts_unfiltered/cells_x_tcc.mtx</pre>
+STARsoloManuscript/exe/kallisto_0.50.1 quant-tcc -b 10 -o splitseq_out/quant_unfiltered/ -t 24 --matrix-to-files --plaintext -i STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/index.idx -g STARsoloManuscript/genomes/index/kallisto_0.50.1/mouse/nac_offlist_1/g -e splitseq_out/counts_unfiltered/cells_x_tcc.ec.txt splitseq_out/counts_unfiltered/cells_x_tcc.mtx</pre>
 
 Now, look in the splitseq_analysis.ipynb notebook for further analysis.
 
